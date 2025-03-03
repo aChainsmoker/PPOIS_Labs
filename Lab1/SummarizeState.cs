@@ -4,6 +4,6 @@ public class SummarizeState : WeddingPhase
 {
     public override void GetToTheNextPhase(Wedding wedding)
     {
-        wedding
+        wedding.IsConcluded = true;
     }
 }
