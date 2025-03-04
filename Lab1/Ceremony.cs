@@ -5,13 +5,19 @@ public class Ceremony
     private List<Guest> _guests;
     private Husband _husband;
     private Wife _wife;
-    private Ring _ring;
+    
+    public List<Guest> Guests { get => _guests; set => _guests = value; }
 
-    public Ceremony(Husband husband, Wife wife, Ring ring)
+    public Ceremony(Husband husband, Wife wife, List<Guest> guests)
     {
         _guests = new List<Guest>();
         _husband = husband;
         _wife = wife;
-        _ring = ring;
+    }
+
+    public void DeclareHusbandAndWife(Husband husband, Wife wife)
+    {
+        husband.IsMarried = true;
+        wife.IsMarried = true;
     }
 }

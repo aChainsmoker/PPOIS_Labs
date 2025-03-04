@@ -1,11 +1,11 @@
 ﻿namespace Lab1;
 
-public class PhotoSessionState : WeddingPhase
+public class BanquetState : WeddingPhase
 {
     public override void GetToTheNextPhase(Wedding wedding)
     {
-        wedding.WeddingPhase = new BanquetState();
-        IOSystem.DeclarePhotoSession();
+        wedding.WeddingPhase = new SummarizeState();
+        IOSystem.DeclareBanquet();
         Console.ReadKey();
         Console.Clear();
     }

@@ -4,6 +4,8 @@ public class WeddingMenu
 {
     private List<KeyValuePair<string, uint>>_menu;
     private List<Dish> _dishes;
+    
+    public List<Dish> Dishes { get => _dishes; set => _dishes = value; }
 
     public WeddingMenu()
     {
@@ -27,6 +29,15 @@ public class WeddingMenu
         for (int i = 0; i < _menu.Count; i++)
         {
             _dishes.Add(new Dish(_menu[i].Key, (uint)new Random().Next(10, 100), _menu[i].Value));
+        }
+    }
+
+    public void AssignTheDishes(Wedding wedding, int[] indexesOfDishes)
+    {
+        for (int i = 0; i < Banquet.AmountOfDishes; i++)
+        {
+            wedding.Banquet.Dishes.Add(_dishes[indexesOfDishes[i]]);
+            wedding.SharedBudget -= (int)_dishes[indexesOfDishes[i]].Price;
         }
     }
 

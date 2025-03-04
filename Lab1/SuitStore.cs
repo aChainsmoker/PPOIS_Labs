@@ -7,6 +7,9 @@ public class SuitStore
     private List<Suit> _menSuits;
     private List<Suit> _womenSuits;
 
+    public List<Suit> MenSuits { get => _menSuits; set => _menSuits = value; }
+    public List<Suit> WomenSuits {get => _womenSuits; set => _womenSuits = value; }
+
     public SuitStore()
     {
         _menSuits = new List<Suit>();
@@ -25,5 +28,17 @@ public class SuitStore
         {
             _womenSuits.Add(new Suit((uint)(new Random().Next(1, 10000)), _womenBrands[i]));
         }
+    }
+
+    public void AssignTheSuitToTheGroom(Wedding wedding, int suitIndex)
+    {
+        wedding.Husband.Suit = _menSuits[suitIndex];
+        wedding.SharedBudget -= (int)_menSuits[suitIndex].Price;
+    }
+
+    public void AssignTheSuitToTheFiancee(Wedding wedding, int suitIndex)
+    {
+        wedding.Wife.Suit = _womenSuits[suitIndex];
+        wedding.SharedBudget -= (int)_womenSuits[suitIndex].Price;
     }
 }
