@@ -22,8 +22,8 @@ public class RingStore
 
     public void AssignTheRings(Wedding wedding, int ringIndex)
     {
-        wedding.Husband.Ring = _rings[ringIndex];
-        wedding.Wife.Ring = _rings[ringIndex];
+        wedding.Groom.Ring = _rings[ringIndex];
+        wedding.Fiancee.Ring = _rings[ringIndex];
         wedding.SharedBudget -= (int)_rings[ringIndex].Price;
     }
 }

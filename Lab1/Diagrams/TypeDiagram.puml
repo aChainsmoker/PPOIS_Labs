@@ -1,0 +1,221 @@
+﻿@startuml
+package "Lab1" {
+
+  class Wedding {
+    - WeddingPhase _weddingPhase
+    - Groom _groom
+    - Fiancee _fiancee
+    - Ceremony _ceremony
+    - Banquet _banquet
+    - WeddingPlace _weddingPlace
+    - List<Guest> _guests
+    - int _sharedBudget
+    - bool isConcluded
+    + WeddingPhaseString : string
+    + ChangeState()
+    + SharedBudget : int
+  }
+
+  abstract class WeddingPhase {
+    {abstract} + GetToTheNextPhase(wedding: Wedding)
+  }
+
+  class CreatingNewlywedState {
+    + GetToTheNextPhase(wedding: Wedding)
+  }
+  class ChoosingWeddingPlaceState {
+    + GetToTheNextPhase(wedding: Wedding)
+  }
+  class ChoosingFianceeDressState {
+    + GetToTheNextPhase(wedding: Wedding)
+  }
+  class ChoosingGroomDressState {
+    + GetToTheNextPhase(wedding: Wedding)
+  }
+  class ChoosingRingState {
+    + GetToTheNextPhase(wedding: Wedding)
+  }
+  class ChoosingWeddingMenuState {
+    + GetToTheNextPhase(wedding: Wedding)
+  }
+  class GuestInvitationState {
+    + GetToTheNextPhase(wedding: Wedding)
+  }
+  class CeremonyState {
+    + GetToTheNextPhase(wedding: Wedding)
+  }
+  class PhotoSessionState {
+    + GetToTheNextPhase(wedding: Wedding)
+  }
+  class BanquetState {
+    + GetToTheNextPhase(wedding: Wedding)
+  }
+  class SummarizeState {
+    + GetToTheNextPhase(wedding: Wedding)
+  }
+  class LostGameState {
+    + GetToTheNextPhase(wedding: Wedding)
+  }
+
+  WeddingPhase <|-- CreatingNewlywedState
+  WeddingPhase <|-- ChoosingWeddingPlaceState
+  WeddingPhase <|-- ChoosingFianceeDressState
+  WeddingPhase <|-- ChoosingGroomDressState
+  WeddingPhase <|-- ChoosingRingState
+  WeddingPhase <|-- ChoosingWeddingMenuState
+  WeddingPhase <|-- GuestInvitationState
+  WeddingPhase <|-- CeremonyState
+  WeddingPhase <|-- PhotoSessionState
+  WeddingPhase <|-- BanquetState
+  WeddingPhase <|-- SummarizeState
+  WeddingPhase <|-- LostGameState
+
+  class ResultSummarizer {
+    + Summarize(wedding: Wedding) : int
+    + CalculateDeadEnd(wedding: Wedding, prices: List<uint>) : bool
+  }
+
+  class Banquet {
+    - List<Guest> _guests
+    - List<Dish> _dishes
+    + Dishes: List<Dish>
+  }
+
+  class Ceremony {
+    - List<Guest> _guests
+    - Groom _groom
+    - Fiancee _fiancee
+    + Guests: List<Guest>
+    + DeclareHusbandAndWife(groom: Groom, fiancee: Fiancee)
+  }
+
+  class Dish {
+    - string _name
+    - uint _price
+    - uint _foodPower
+    + Name: string
+    + Price: uint
+    + FoodPower: uint
+  }
+
+  class Guest {
+    - string _name
+    - uint _hungerLevel
+    + Name: string
+    + HungerLevel: uint
+  }
+
+  class Newlywed {
+    - uint _budget
+    - string _name
+    - Suit _suit
+    - bool _isMarried
+    - Ring _ring
+    + Budget: uint
+    + Name: string
+    + Suit: Suit
+    + IsMarried: bool
+    + Ring: Ring
+    + InviteGuests(names: string[], wedding: Wedding)
+  }
+
+  class Groom {
+    + Groom(string _name)
+    + Groom()
+  }
+  Groom --|> Newlywed
+
+  class Fiancee {
+    + Fiancee(string _name)
+    + Fiancee()
+  }
+  Fiancee --|> Newlywed
+
+  class WeddingAttribute {
+    - uint _price
+    - AttributePrestige _attributePrestige
+    - string _brand
+    + Price: uint
+    + Brand: string
+    + Prestige: AttributePrestige
+  }
+
+  class Ring {
+    + Ring(uint price, string brand)
+  }
+  Ring --|> WeddingAttribute
+  Newlywed "1" o-- "1" Ring
+
+  class Suit {
+    + Suit(uint price, string brand)
+  }
+  Suit --|> WeddingAttribute
+  Newlywed "1" o-- "1" Suit
+
+  WeddingAttribute "1" o-- "1" AttributePrestige
+
+  class RingStore {
+    - string[] _brands
+    - List<Ring> _rings
+    + Rings: List<Ring>
+    + AssignTheRings(wedding: Wedding, ringIndex: int)
+  }
+  RingStore "1" *-- "*" Ring
+
+  class SuitStore {
+    - string[] _menBrands
+    - string[] _womenBrands
+    - List<Suit> _menSuits
+    - List<Suit> _womenSuits
+    + MenSuits: List<Suit>
+    + WomenSuits: List<Suit>
+    + AssignTheSuitToTheGroom(wedding: Wedding, suitIndex: int)
+    + AssignTheSuitToTheFiancee(wedding: Wedding, suitIndex: int)
+  }
+  SuitStore "1" *-- "*" Suit
+
+  class WeddingMap {
+    - List<WeddingPlace> _weddingPlaces
+    - string[] _locations
+    + WeddingPlaces: List<WeddingPlace>
+    + AssignThePlace(wedding: Wedding, indexOfPlace: int)
+  }
+  WeddingMap "1" *-- "*" WeddingPlace
+
+  class WeddingMenu {
+    - List<KeyValuePair<string, uint>> _menu
+    - List<Dish> _dishes
+    + Dishes: List<Dish>
+    + AssignTheDishes(wedding: Wedding, indexesOfDishes: int[])
+  }
+  WeddingMenu "1" *-- "*" Dish
+
+  enum AttributePrestige {
+    Cheap
+    Normal
+    Premium
+  }
+
+  class JsonStateManager {
+    - GetFilePath(fileName: string) : string
+    {static} + SaveState<T>(state: T, fileName: string)
+    {static} + LoadState<T>(fileName: string) : T
+    {static} + DeleteState(fileName: string)
+  }
+
+  Wedding "1" o-- "1" Banquet
+  Wedding "1" o-- "1" Ceremony
+  Wedding "1" o-- "1" WeddingPlace
+  Wedding "1" o-- "1" Groom
+  Wedding "1" o-- "1" Fiancee
+  Wedding "1" o-- "*" Guest
+
+  Banquet "1" *-- "*" Dish
+
+  Ceremony "1" o-- "*" Guest
+  Ceremony "1" --> "1" Groom
+  Ceremony "1" --> "1" Fiancee
+
+  Newlywed --> "*" Guest
+}
+@enduml

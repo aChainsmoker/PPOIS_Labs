@@ -14,23 +14,30 @@ public static class IOSystem
     {
         Console.WriteLine("Choose wedding place");
         DisplayWeddingPlaces(weddingMap.WeddingPlaces);
-        indexOfPlace = Convert.ToInt32(Console.ReadLine()) - 1;
+
+       try { indexOfPlace = Convert.ToInt32(Console.ReadLine()) - 1; } catch {throw new System.FormatException("Invalid input"); }
     }
-    public static void ChooseWeddingAttributes(SuitStore suitStore, RingStore ringStore, out int indexOfFianceeDress, out int indexOfGroomDress, out int indexOfRing)
+    public static void ChooseWeddingDressForFiancee(SuitStore suitStore, out int indexOfFianceeDress)
     {
         Console.WriteLine("Choose fiancee wedding dress");
         DisplayWeddingDresses(suitStore.WomenSuits);
-        indexOfFianceeDress = Convert.ToInt32(Console.ReadLine()) - 1;
-        Console.Clear();
-        Console.WriteLine("Choose groom wedding dress");
-        DisplayWeddingDresses(suitStore.MenSuits);
-        indexOfGroomDress = Convert.ToInt32(Console.ReadLine()) - 1;
-        Console.Clear();
-        Console.WriteLine("Choose wedding rings");
-        DisplayWeddingRings(ringStore.Rings);
-        indexOfRing = Convert.ToInt32(Console.ReadLine()) - 1;
+        try { indexOfFianceeDress = Convert.ToInt32(Console.ReadLine()) - 1; } catch {throw new System.FormatException("Invalid input"); }
     }
     
+    public static void ChooseWeddingDressForGroom(SuitStore suitStore, out int indexOfGroomDress)
+    {
+        Console.WriteLine("Choose groom wedding dress");
+        DisplayWeddingDresses(suitStore.MenSuits);
+        try { indexOfGroomDress = Convert.ToInt32(Console.ReadLine()) - 1;} catch {throw new System.FormatException("Invalid input"); }
+    }
+    
+    public static void ChooseWeddingRing(RingStore ringStore, out int indexOfRing)
+    {
+        Console.WriteLine("Choose wedding rings");
+        DisplayWeddingRings(ringStore.Rings);
+        try { indexOfRing = Convert.ToInt32(Console.ReadLine()) - 1;} catch {throw new System.FormatException("Invalid input"); }
+        
+    }
 
     public static void ChooseWeddingMenu(WeddingMenu weddingMenu, out int[] indexesOfWeddingMenu)
     {
@@ -38,7 +45,7 @@ public static class IOSystem
         Console.WriteLine("Choose wedding menu");
         DisplayWeddingDishes(weddingMenu.Dishes);
         for(int i = 0; i< Banquet.AmountOfDishes; i++)
-            indexesOfWeddingMenu[i] = Convert.ToInt32(Console.ReadLine()) - 1;
+            try { indexesOfWeddingMenu[i] = Convert.ToInt32(Console.ReadLine()) - 1;} catch {throw new System.FormatException("Invalid input"); }
     }
 
     public static void InviteGuests(out string[] names)
@@ -54,9 +61,9 @@ public static class IOSystem
         }
     }
     
-    public static void DeclareMarriage(Husband husband, Wife wife)
+    public static void DeclareMarriage(Groom groom, Fiancee fiancee)
     {
-        Console.WriteLine($"{husband.Name} and {wife.Name} got married!🎉");
+        Console.WriteLine($"{groom.Name} and {fiancee.Name} got married!");
     }
     
     public static void DeclareBanquet()
@@ -69,9 +76,10 @@ public static class IOSystem
         Console.WriteLine("Photo session was held");
     }
 
-    public static void Summarize(int amountOfPoints)
+    public static void DisplaySummarazation(int amountOfPoints)
     {
         Console.WriteLine($"Your final result: {amountOfPoints}");
+        Console.WriteLine($"\nRecord: {JsonStateManager.LoadState<string>("WeddingRecord.json")}");
     }
 
     private static void DisplayWeddingDishes(List<Dish> weddingDishes)
@@ -91,7 +99,7 @@ public static class IOSystem
             Console.WriteLine($"====={i+1}=====");
             Console.WriteLine(weddingDresses[i].Brand);
             Console.WriteLine(weddingDresses[i].Price);
-            Console.WriteLine(ReturnPrestige(weddingDresses[i].Prestige));
+            Console.WriteLine(GetPrestigeString(weddingDresses[i].Prestige));
             Console.WriteLine();
         }
     }
@@ -103,7 +111,7 @@ public static class IOSystem
             Console.WriteLine($"====={i+1}=====");
             Console.WriteLine(weddingRings[i].Brand);
             Console.WriteLine(weddingRings[i].Price);
-            Console.WriteLine(ReturnPrestige(weddingRings[i].Prestige));
+            Console.WriteLine(GetPrestigeString(weddingRings[i].Prestige));
             Console.WriteLine();
         }
     }
@@ -114,14 +122,14 @@ public static class IOSystem
         {
             Console.WriteLine($"====={i+1}=====");
             Console.WriteLine(weddingPlaces[i].Location);
-            Console.WriteLine(weddingPlaces[i].Date);
+            Console.WriteLine(weddingPlaces[i].Date.ToString("dd.MM.yyyy HH:mm"));
             Console.WriteLine(weddingPlaces[i].GuestCapacity);
             Console.WriteLine(weddingPlaces[i].Price);
             Console.WriteLine();
         }
     }
     
-    private static string ReturnPrestige(AttributePrestige attributePrestige)
+    public static string GetPrestigeString(AttributePrestige attributePrestige)
     {
         string stringPrestige;
         stringPrestige = attributePrestige switch
@@ -133,18 +141,64 @@ public static class IOSystem
         return stringPrestige;
     }
 
+    public static AttributePrestige GetPrestigeFromString(string attributePrestigeString)
+    {
+        AttributePrestige attributePrestige;
+        attributePrestige = attributePrestigeString switch
+        {
+            "Cheap" => AttributePrestige.Cheap,
+            "Normal" => AttributePrestige.Normal,
+            "Premium" => AttributePrestige.Premium,
+        };
+        return attributePrestige;
+    }
+
     public static void PrintBudget(int budget)
     {
         Console.WriteLine($"Current balance: {budget}\n");
     }
-
-    public static void NotifyAboutBudgetLimit()
-    {
-        Console.WriteLine("You cant afford it\n");
-    }
+    
 
     public static void PrintLoserScreen()
     {
         Console.WriteLine("You couldn't afford anything from the next list. You lost. That happens");
+    }
+    
+    public static string GetTheWeddingStateString(WeddingPhase weddingPhase)
+    {
+        string weddingPhaseString = weddingPhase switch
+        {
+            CreatingNewlywedState => "CreatingNewlywedState",
+            ChoosingGroomDressState => "ChoosingGroomDressState",
+            ChoosingFianceeDressState => "ChoosingFianceeDressState",
+            ChoosingRingState => "ChoosingRingState",
+            BanquetState => "BanquetState",
+            CeremonyState => "CeremonyState",
+            ChoosingWeddingMenuState => "ChoosingWeddingMenuState",
+            ChoosingWeddingPlaceState => "ChoosingWeddingPlaceState",
+            GuestInvitationState => "GuestInvitationState",
+            PhotoSessionState => "PhotoSessionState",
+            SummarizeState => "SummarizeState",
+        };
+        return weddingPhaseString;
+    }
+
+    public static WeddingPhase GetTheWeddingPhaseFromString(string weddingPhaseString)
+    {
+        WeddingPhase weddingPhase = weddingPhaseString switch
+        {
+            "CreatingNewlywedState" => new CreatingNewlywedState(),
+            "ChoosingGroomDressState" => new ChoosingGroomDressState(),
+            "ChoosingFianceeDressState" => new ChoosingFianceeDressState(),
+            "ChoosingRingState" => new ChoosingRingState(),
+            "BanquetState" => new BanquetState(),
+            "CeremonyState" => new CeremonyState(),
+            "ChoosingWeddingMenuState" => new ChoosingWeddingMenuState(),
+            "ChoosingWeddingPlaceState" => new ChoosingWeddingPlaceState(),
+            "GuestInvitationState" => new GuestInvitationState(),
+            "PhotoSessionState" => new PhotoSessionState(),
+            "SummarizeState" => new SummarizeState(),
+        };
+        return weddingPhase;
     }
 }

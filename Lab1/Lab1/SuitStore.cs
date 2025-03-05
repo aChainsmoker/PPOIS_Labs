@@ -32,13 +32,13 @@ public class SuitStore
 
     public void AssignTheSuitToTheGroom(Wedding wedding, int suitIndex)
     {
-        wedding.Husband.Suit = _menSuits[suitIndex];
+        wedding.Groom.Suit = _menSuits[suitIndex];
         wedding.SharedBudget -= (int)_menSuits[suitIndex].Price;
     }
 
     public void AssignTheSuitToTheFiancee(Wedding wedding, int suitIndex)
     {
-        wedding.Wife.Suit = _womenSuits[suitIndex];
+        wedding.Fiancee.Suit = _womenSuits[suitIndex];
         wedding.SharedBudget -= (int)_womenSuits[suitIndex].Price;
     }
 }

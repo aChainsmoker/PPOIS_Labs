@@ -1,0 +1,38 @@
+﻿@startuml
+state "Creating Newlyweds" as CreatingNewlywedState
+state "Choosing Wedding Place" as ChoosingWeddingPlaceState
+state "Choosing Fiancee Dress" as ChoosingFianceeDressState
+state "Choosing Groom Dress" as ChoosingGroomDressState
+state "Choosing Ring" as ChoosingRingState
+state "Choosing Wedding Menu" as ChoosingWeddingMenuState
+state "Guest Invitation" as GuestInvitationState
+state "Ceremony" as CeremonyState
+state "Photo Session" as PhotoSessionState
+state "Banquet" as BanquetState
+state "Summarize" as SummarizeState
+state "Lost Game" as LostGameState
+
+[*] --> CreatingNewlywedState
+
+CreatingNewlywedState --> ChoosingWeddingPlaceState : Names Assigned
+ChoosingWeddingPlaceState --> ChoosingFianceeDressState : Places is chosen
+ChoosingFianceeDressState --> ChoosingGroomDressState : Fiancee dress is chosen
+ChoosingGroomDressState --> ChoosingRingState : Groom dress is chosen
+ChoosingRingState --> ChoosingWeddingMenuState : Ring is chosen
+ChoosingWeddingMenuState --> GuestInvitationState : Dishes are chosen
+GuestInvitationState --> CeremonyState : Guests are invited
+CeremonyState --> PhotoSessionState : Ceremony was held
+PhotoSessionState --> BanquetState : Photo Session was held
+BanquetState --> SummarizeState : Banquet was held
+
+state "Lost Game" as LostGameState
+ChoosingFianceeDressState --> LostGameState : Not enough budget
+ChoosingGroomDressState --> LostGameState : Not enough budget
+ChoosingRingState --> LostGameState : Not enough budget
+ChoosingWeddingMenuState --> LostGameState : Not enough budget
+ChoosingWeddingPlaceState --> LostGameState : Not enough budget
+
+LostGameState --> [*]
+
+SummarizeState --> [*]
+@enduml

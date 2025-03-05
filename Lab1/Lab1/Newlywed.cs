@@ -14,6 +14,7 @@ public class Newlywed
     public Suit Suit { get => _suit; set => _suit = value; }
     public bool IsMarried { get => _isMarried; set => _isMarried = value; }
     public Ring Ring { get => _ring; set => _ring = value; }
+    public Newlywed(){}
 
     public Newlywed(string name)
     {

@@ -4,9 +4,10 @@ public class PhotoSessionState : WeddingPhase
 {
     public override void GetToTheNextPhase(Wedding wedding)
     {
-        wedding.WeddingPhase = new BanquetState();
+        JsonStateManager.SaveState(wedding, "WeddingState.json");
         IOSystem.DeclarePhotoSession();
         Console.ReadKey();
         Console.Clear();
+        wedding.WeddingPhase = new BanquetState();
     }
 }

@@ -6,19 +6,19 @@ public class ResultSummarizer
     {
         int amountOfPoints = 0;
         
-        amountOfPoints += wedding.Husband.Suit.Prestige switch
+        amountOfPoints += wedding.Groom.Suit.Prestige switch
         {
             AttributePrestige.Cheap => 100,
             AttributePrestige.Normal => 200,
             AttributePrestige.Premium => 300
         };
-        amountOfPoints += wedding.Wife.Suit.Prestige switch
+        amountOfPoints += wedding.Fiancee.Suit.Prestige switch
         {
             AttributePrestige.Cheap => 100,
             AttributePrestige.Normal => 200,
             AttributePrestige.Premium => 300
         };
-        amountOfPoints += wedding.Husband.Ring.Prestige switch
+        amountOfPoints += wedding.Groom.Ring.Prestige switch
         {
             AttributePrestige.Cheap => 100,
             AttributePrestige.Normal => 200,
@@ -42,7 +42,8 @@ public class ResultSummarizer
         amountOfPoints += (wedding.Ceremony.Guests.Count - hungryGuests) * 30;
         amountOfPoints -= hungryGuests * 90;
 
-        amountOfPoints += (int)((wedding.Husband.Budget + wedding.Wife.Budget) / 10);
+        amountOfPoints += (int)((wedding.Groom.Budget + wedding.Fiancee.Budget) / 100);
+        amountOfPoints -= wedding.SharedBudget < 0 ? wedding.SharedBudget : 0;
         
         return amountOfPoints;
     }

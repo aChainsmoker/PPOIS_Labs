@@ -9,6 +9,7 @@ public class Banquet
     
     public List<Dish> Dishes { get => _dishes; set => _dishes = value; }
 
+    public Banquet(){}
     public Banquet(List<Guest> guests)
     {
         _dishes = new List<Dish>();

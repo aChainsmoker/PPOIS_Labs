@@ -1,10 +1,12 @@
-﻿namespace Lab1;
+﻿using System.Text.Json.Serialization;
+
+namespace Lab1;
 
 public class Wedding
 {
     private WeddingPhase _weddingPhase;
-    private Husband _husband;
-    private Wife _wife;
+    private Groom _groom;
+    private Fiancee _fiancee;
     private Ceremony _ceremony;
     private Banquet _banquet;
     private WeddingPlace _weddingPlace;
@@ -12,25 +14,21 @@ public class Wedding
     private int _sharedBudget;
     private bool isConcluded = false;
 
-    public Husband Husband {get => _husband; set => _husband = value; }
-    public Wife Wife { get => _wife; set => _wife = value; }
+    public Groom Groom {get => _groom; set => _groom = value; }
+    public Fiancee Fiancee { get => _fiancee; set => _fiancee = value; }
     public Ceremony Ceremony { get => _ceremony; set => _ceremony = value; }
     public Banquet Banquet { get => _banquet; set => _banquet = value; }
     public WeddingPlace WeddingPlace { get => _weddingPlace; set => _weddingPlace = value; }
     public List<Guest> Guests { get => _guests; set => _guests = value; }
+
+    public string WeddingPhaseString { get; set; }
     
-    public WeddingPhase WeddingPhase{get => _weddingPhase; set => _weddingPhase = value; }
+    [JsonIgnore]public WeddingPhase WeddingPhase{get => _weddingPhase; set => _weddingPhase = value; }
 
     public int SharedBudget
     {
         get => _sharedBudget;
-        set
-        {
-            if(_sharedBudget<0)
-                IOSystem.NotifyAboutBudgetLimit();
-            else
-                _sharedBudget = value;
-        }
+        set => _sharedBudget = value;
     }
 
     public bool IsConcluded{get => isConcluded;
@@ -45,13 +43,14 @@ public class Wedding
     {
         _weddingPhase = weddingPhase;
         _guests = new List<Guest>();
+        _banquet = new Banquet(_guests);
         
     }
-    
+
+    public Wedding() { }
     public void ChangeState()
     {
         _weddingPhase.GetToTheNextPhase(this);
-        _banquet = new Banquet(_guests);
     }
     
 }
