@@ -32,13 +32,27 @@ public class SuitStore
 
     public void AssignTheSuitToTheGroom(Wedding wedding, int suitIndex)
     {
-        wedding.Groom.Suit = _menSuits[suitIndex];
-        wedding.SharedBudget -= (int)_menSuits[suitIndex].Price;
+        try 
+        {
+            wedding.Groom.Suit = _menSuits[suitIndex];
+            wedding.SharedBudget -= (int)_menSuits[suitIndex].Price;
+        }
+        catch
+        {
+            throw new IndexOutOfRangeException("You have chosen the options out of bounds of array");
+        }
     }
 
     public void AssignTheSuitToTheFiancee(Wedding wedding, int suitIndex)
     {
-        wedding.Fiancee.Suit = _womenSuits[suitIndex];
-        wedding.SharedBudget -= (int)_womenSuits[suitIndex].Price;
+        try 
+        {
+            wedding.Fiancee.Suit = _womenSuits[suitIndex];
+            wedding.SharedBudget -= (int)_womenSuits[suitIndex].Price;
+        }
+        catch
+        {
+            throw new IndexOutOfRangeException("You have chosen the options out of bounds of array");
+        }
     }
 }

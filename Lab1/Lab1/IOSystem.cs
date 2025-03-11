@@ -51,7 +51,16 @@ public static class IOSystem
     public static void InviteGuests(out string[] names)
     {
         Console.WriteLine("Enter amount of guests");
-        int amountOfGuests = Convert.ToInt32(Console.ReadLine());
+        int amountOfGuests = 0;
+        try
+        {
+            amountOfGuests = Convert.ToInt32(Console.ReadLine());
+        }
+        catch (Exception e)
+        {
+            throw new FormatException("Invalid input");
+        }
+        
         names = new string[amountOfGuests];
         for (int i = 0; i < amountOfGuests; i++)
         {

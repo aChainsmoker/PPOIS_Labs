@@ -34,10 +34,17 @@ public class WeddingMenu
 
     public void AssignTheDishes(Wedding wedding, int[] indexesOfDishes)
     {
-        for (int i = 0; i < Banquet.AmountOfDishes; i++)
+        try
         {
-            wedding.Banquet.Dishes.Add(_dishes[indexesOfDishes[i]]);
-            wedding.SharedBudget -= (int)_dishes[indexesOfDishes[i]].Price;
+            for (int i = 0; i < Banquet.AmountOfDishes; i++)
+            {
+                wedding.Banquet.Dishes.Add(_dishes[indexesOfDishes[i]]);
+                wedding.SharedBudget -= (int)_dishes[indexesOfDishes[i]].Price;
+            }
+        }
+        catch
+        {
+            throw new IndexOutOfRangeException("You have chosen the options out of bounds of array");
         }
     }
 

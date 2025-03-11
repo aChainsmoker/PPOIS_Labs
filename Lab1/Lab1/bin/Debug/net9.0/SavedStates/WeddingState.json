@@ -1,0 +1,13 @@
+{
+  "Groom": null,
+  "Fiancee": null,
+  "Ceremony": null,
+  "Banquet": {
+    "Dishes": []
+  },
+  "WeddingPlace": null,
+  "Guests": [],
+  "WeddingPhaseString": "CreatingNewlywedState",
+  "SharedBudget": 0,
+  "IsConcluded": false
+}

@@ -30,7 +30,14 @@ public class WeddingMap
     }
     public void AssignThePlace(Wedding wedding, int indexOfPlace)
     {
-        wedding.WeddingPlace = _weddingPlaces[indexOfPlace];
-        wedding.SharedBudget -= (int)_weddingPlaces[indexOfPlace].Price;
+        try
+        {
+            wedding.WeddingPlace = _weddingPlaces[indexOfPlace];
+            wedding.SharedBudget -= (int)_weddingPlaces[indexOfPlace].Price;
+        }
+        catch
+        {
+            throw new IndexOutOfRangeException("You have chosen the options out of bounds of array");
+        }
     }
 }

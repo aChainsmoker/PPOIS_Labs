@@ -24,10 +24,18 @@ public class Newlywed
 
     public void InviteGuests(string[] names, Wedding wedding)
     {
-        for (int i = 0; i < names.Length; i++)
+        try
         {
-            Guest guest = new Guest(names[i]);
-            wedding.Guests.Add(guest);
+            for(int i = 0; i < names.Length; i++)
+            {
+                Guest guest = new Guest(names[i]);
+                wedding.Guests.Add(guest);
+            }
         }
+        catch
+        {
+            throw new IndexOutOfRangeException("You have chosen the options out of bounds of array");
+        }
+       
     }
 }
