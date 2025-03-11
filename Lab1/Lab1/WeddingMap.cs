@@ -2,13 +2,14 @@
 
 public class WeddingMap
 {
-    private List<WeddingPlace> _weddingPlaces = new List<WeddingPlace>();
+    private List<WeddingPlace> _weddingPlaces;
     private string[] _locations;
     
     public List<WeddingPlace> WeddingPlaces { get => _weddingPlaces; set => _weddingPlaces = value; }
 
     public WeddingMap()
     {
+        _weddingPlaces = new List<WeddingPlace>();
         _locations = new string[]
         {
             "Restaurant in San-Francisco", "Church in Minsk", "Castle in London", "Theatre in Sydney", "Restaurant in Moscow", "Palace of the Republic in Minsk", "Coast on Bali"
@@ -30,14 +31,7 @@ public class WeddingMap
     }
     public void AssignThePlace(Wedding wedding, int indexOfPlace)
     {
-        try
-        {
-            wedding.WeddingPlace = _weddingPlaces[indexOfPlace];
-            wedding.SharedBudget -= (int)_weddingPlaces[indexOfPlace].Price;
-        }
-        catch
-        {
-            throw new IndexOutOfRangeException("You have chosen the options out of bounds of array");
-        }
+        wedding.WeddingPlace = _weddingPlaces[indexOfPlace];
+        wedding.SharedBudget -= (int)_weddingPlaces[indexOfPlace].Price;
     }
 }

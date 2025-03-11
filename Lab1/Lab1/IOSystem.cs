@@ -15,27 +15,27 @@ public static class IOSystem
         Console.WriteLine("Choose wedding place");
         DisplayWeddingPlaces(weddingMap.WeddingPlaces);
 
-       try { indexOfPlace = Convert.ToInt32(Console.ReadLine()) - 1; } catch {throw new System.FormatException("Invalid input"); }
+        indexOfPlace = TakeTheCorrectNumericIndex(weddingMap.WeddingPlaces) - 1;
     }
     public static void ChooseWeddingDressForFiancee(SuitStore suitStore, out int indexOfFianceeDress)
     {
         Console.WriteLine("Choose fiancee wedding dress");
         DisplayWeddingDresses(suitStore.WomenSuits);
-        try { indexOfFianceeDress = Convert.ToInt32(Console.ReadLine()) - 1; } catch {throw new System.FormatException("Invalid input"); }
+        indexOfFianceeDress = TakeTheCorrectNumericIndex(suitStore.WomenSuits) - 1;
     }
     
     public static void ChooseWeddingDressForGroom(SuitStore suitStore, out int indexOfGroomDress)
     {
         Console.WriteLine("Choose groom wedding dress");
         DisplayWeddingDresses(suitStore.MenSuits);
-        try { indexOfGroomDress = Convert.ToInt32(Console.ReadLine()) - 1;} catch {throw new System.FormatException("Invalid input"); }
+        indexOfGroomDress = TakeTheCorrectNumericIndex(suitStore.MenSuits) - 1;
     }
     
     public static void ChooseWeddingRing(RingStore ringStore, out int indexOfRing)
     {
         Console.WriteLine("Choose wedding rings");
         DisplayWeddingRings(ringStore.Rings);
-        try { indexOfRing = Convert.ToInt32(Console.ReadLine()) - 1;} catch {throw new System.FormatException("Invalid input"); }
+        indexOfRing = TakeTheCorrectNumericIndex(ringStore.Rings) - 1;
         
     }
 
@@ -45,21 +45,22 @@ public static class IOSystem
         Console.WriteLine("Choose wedding menu");
         DisplayWeddingDishes(weddingMenu.Dishes);
         for(int i = 0; i< Banquet.AmountOfDishes; i++)
-            try { indexesOfWeddingMenu[i] = Convert.ToInt32(Console.ReadLine()) - 1;} catch {throw new System.FormatException("Invalid input"); }
+            indexesOfWeddingMenu[i] = TakeTheCorrectNumericIndex(weddingMenu.Dishes) - 1;
     }
 
     public static void InviteGuests(out string[] names)
     {
         Console.WriteLine("Enter amount of guests");
         int amountOfGuests = 0;
-        try
+
+        amountOfGuests = TakeTheNumericInput();
+        
+        while (amountOfGuests < 0)
         {
-            amountOfGuests = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter correct amount of guests");
+            amountOfGuests = TakeTheNumericInput();
         }
-        catch (Exception e)
-        {
-            throw new FormatException("Invalid input");
-        }
+        
         
         names = new string[amountOfGuests];
         for (int i = 0; i < amountOfGuests; i++)
@@ -73,22 +74,26 @@ public static class IOSystem
     public static void DeclareMarriage(Groom groom, Fiancee fiancee)
     {
         Console.WriteLine($"{groom.Name} and {fiancee.Name} got married!");
+        Console.WriteLine("\nPress enter to continue...");
     }
     
     public static void DeclareBanquet()
     {
         Console.WriteLine("Banquet was held");
+        Console.WriteLine("\nPress enter to continue...");
     }
     
     public static void DeclarePhotoSession()
     {
         Console.WriteLine("Photo session was held");
+        Console.WriteLine("\nPress enter to continue...");
     }
 
     public static void DisplaySummarazation(int amountOfPoints)
     {
         Console.WriteLine($"Your final result: {amountOfPoints}");
         Console.WriteLine($"\nRecord: {JsonStateManager.LoadState<string>("WeddingRecord.json")}");
+        Console.WriteLine("\nPress enter to continue...");
     }
 
     private static void DisplayWeddingDishes(List<Dish> weddingDishes)
@@ -96,19 +101,20 @@ public static class IOSystem
         for (int i = 0; i < weddingDishes.Count; i++)
         {
             Console.WriteLine($"====={i+1}=====");
-            Console.WriteLine(weddingDishes[i].Name);
-            Console.WriteLine(weddingDishes[i].Price);
+            Console.WriteLine($"Name: {weddingDishes[i].Name}");
+            Console.WriteLine($"Price: {weddingDishes[i].Price}");
             Console.WriteLine();
         }
     }
+
     private static void DisplayWeddingDresses(List<Suit> weddingDresses)
     {
         for (int i = 0; i < weddingDresses.Count; i++)
         {
             Console.WriteLine($"====={i+1}=====");
-            Console.WriteLine(weddingDresses[i].Brand);
-            Console.WriteLine(weddingDresses[i].Price);
-            Console.WriteLine(GetPrestigeString(weddingDresses[i].Prestige));
+            Console.WriteLine($"Brand: {weddingDresses[i].Brand}");
+            Console.WriteLine($"Price: {weddingDresses[i].Price}");
+            Console.WriteLine($"Prestige: {GetPrestigeString(weddingDresses[i].Prestige)}");
             Console.WriteLine();
         }
     }
@@ -118,9 +124,9 @@ public static class IOSystem
         for (int i = 0; i < weddingRings.Count; i++)
         {
             Console.WriteLine($"====={i+1}=====");
-            Console.WriteLine(weddingRings[i].Brand);
-            Console.WriteLine(weddingRings[i].Price);
-            Console.WriteLine(GetPrestigeString(weddingRings[i].Prestige));
+            Console.WriteLine($"Brand: {weddingRings[i].Brand}");
+            Console.WriteLine($"Price: {weddingRings[i].Price}");
+            Console.WriteLine($"Prestige: {GetPrestigeString(weddingRings[i].Prestige)}");
             Console.WriteLine();
         }
     }
@@ -130,10 +136,10 @@ public static class IOSystem
         for (int i = 0; i < weddingPlaces.Count; i++)
         {
             Console.WriteLine($"====={i+1}=====");
-            Console.WriteLine(weddingPlaces[i].Location);
-            Console.WriteLine(weddingPlaces[i].Date.ToString("dd.MM.yyyy HH:mm"));
-            Console.WriteLine(weddingPlaces[i].GuestCapacity);
-            Console.WriteLine(weddingPlaces[i].Price);
+            Console.WriteLine($"Location: {weddingPlaces[i].Location}");
+            Console.WriteLine($"Date: {weddingPlaces[i].Date.ToString("dd.MM.yyyy HH:mm")}");
+            Console.WriteLine($"Guest Capacity: {weddingPlaces[i].GuestCapacity}");
+            Console.WriteLine($"Price: {weddingPlaces[i].Price}");
             Console.WriteLine();
         }
     }
@@ -165,12 +171,6 @@ public static class IOSystem
     public static void PrintBudget(int budget)
     {
         Console.WriteLine($"Current balance: {budget}\n");
-    }
-    
-
-    public static void PrintLoserScreen()
-    {
-        Console.WriteLine("You couldn't afford anything from the next list. You lost. That happens");
     }
     
     public static string GetTheWeddingStateString(WeddingPhase weddingPhase)
@@ -209,5 +209,47 @@ public static class IOSystem
             "SummarizeState" => new SummarizeState(),
         };
         return weddingPhase;
+    }
+
+    private static int TakeTheNumericInput()
+    {
+        while (true)
+        {
+            int numericInput;
+            try
+            {
+                numericInput = Convert.ToInt32(Console.ReadLine());
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Enter numeric input!\n");
+                continue;
+            }
+            return numericInput;
+        }
+    }
+
+    private static bool CheckIfTheIndexInTheArrayBounds<T>(int index, List<T> array)
+    {
+        if(index > array.Count || index < 0)
+            return false;
+        return true;
+    }
+
+    private static int TakeTheCorrectNumericIndex<T>(List<T> array)
+    {
+        while (true)
+        {
+            int numericInput = TakeTheNumericInput();
+            if (CheckIfTheIndexInTheArrayBounds(numericInput, array))
+                return numericInput;
+            else
+                Console.WriteLine("Enter correct index of item\n");
+        }
+    }
+
+    public static void Clear()
+    {
+        if(!Console.IsOutputRedirected) Console.Clear();
     }
 }

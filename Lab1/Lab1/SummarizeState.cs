@@ -19,7 +19,7 @@ public class SummarizeState : WeddingPhase
             throw new FormatException("The record data is in invalid format.");
         }
         
-        Console.ReadKey();
+        Console.ReadLine();
         JsonStateManager.DeleteState("WeddingState.json");
     }
 }

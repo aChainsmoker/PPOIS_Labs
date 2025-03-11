@@ -12,7 +12,7 @@ public class Wedding
     private WeddingPlace _weddingPlace;
     private List<Guest> _guests;
     private int _sharedBudget;
-    private bool isConcluded = false;
+    private bool _isConcluded = false;
 
     public Groom Groom {get => _groom; set => _groom = value; }
     public Fiancee Fiancee { get => _fiancee; set => _fiancee = value; }
@@ -31,11 +31,11 @@ public class Wedding
         set => _sharedBudget = value;
     }
 
-    public bool IsConcluded{get => isConcluded;
+    public bool IsConcluded{get => _isConcluded;
         set
         {
-            if((_weddingPhase is SummarizeState summarizeState) || (_weddingPhase is LostGameState lostGameState))
-                isConcluded = value;
+            if((_weddingPhase is SummarizeState summarizeState))
+                _isConcluded = value;
         }
     }
 

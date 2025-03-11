@@ -1,4 +1,6 @@
-﻿namespace Lab1;
+﻿using System.Diagnostics;
+
+namespace Lab1;
 
 public class CeremonyState : WeddingPhase
 {
@@ -7,8 +9,8 @@ public class CeremonyState : WeddingPhase
         JsonStateManager.SaveState(wedding, "WeddingState.json");
         wedding.Ceremony.DeclareHusbandAndWife(wedding.Groom, wedding.Fiancee);
         IOSystem.DeclareMarriage(wedding.Groom, wedding.Fiancee);
-        Console.ReadKey();
-        Console.Clear();
+        Console.ReadLine();
+        IOSystem.Clear();
         wedding.WeddingPhase = new PhotoSessionState();
     }
 }

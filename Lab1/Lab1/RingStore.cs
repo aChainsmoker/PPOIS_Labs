@@ -22,15 +22,8 @@ public class RingStore
 
     public void AssignTheRings(Wedding wedding, int ringIndex)
     {
-        try
-        {
-            wedding.Groom.Ring = _rings[ringIndex];
-            wedding.Fiancee.Ring = _rings[ringIndex];
-            wedding.SharedBudget -= (int)_rings[ringIndex].Price;
-        }
-        catch
-        {
-            throw new IndexOutOfRangeException("You have chosen the options out of bounds of array");
-        }
+        wedding.Groom.Ring = _rings[ringIndex];
+        wedding.Fiancee.Ring = _rings[ringIndex];
+        wedding.SharedBudget -= (int)_rings[ringIndex].Price;
     }
 }

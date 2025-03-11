@@ -6,8 +6,8 @@ public class PhotoSessionState : WeddingPhase
     {
         JsonStateManager.SaveState(wedding, "WeddingState.json");
         IOSystem.DeclarePhotoSession();
-        Console.ReadKey();
-        Console.Clear();
+        Console.ReadLine();
+        IOSystem.Clear();
         wedding.WeddingPhase = new BanquetState();
     }
 }

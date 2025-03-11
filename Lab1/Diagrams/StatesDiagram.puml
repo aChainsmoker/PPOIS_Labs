@@ -9,8 +9,7 @@ state "Guest Invitation" as GuestInvitationState
 state "Ceremony" as CeremonyState
 state "Photo Session" as PhotoSessionState
 state "Banquet" as BanquetState
-state "Summarize" as SummarizeState
-state "Lost Game" as LostGameState
+state "Summarization" as SummarizeState
 
 [*] --> CreatingNewlywedState
 
@@ -25,14 +24,5 @@ CeremonyState --> PhotoSessionState : Ceremony was held
 PhotoSessionState --> BanquetState : Photo Session was held
 BanquetState --> SummarizeState : Banquet was held
 
-state "Lost Game" as LostGameState
-ChoosingFianceeDressState --> LostGameState : Not enough budget
-ChoosingGroomDressState --> LostGameState : Not enough budget
-ChoosingRingState --> LostGameState : Not enough budget
-ChoosingWeddingMenuState --> LostGameState : Not enough budget
-ChoosingWeddingPlaceState --> LostGameState : Not enough budget
-
-LostGameState --> [*]
-
-SummarizeState --> [*]
+SummarizeState --> [*] : Results are summed up
 @enduml

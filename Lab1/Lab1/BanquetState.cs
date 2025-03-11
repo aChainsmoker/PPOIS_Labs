@@ -7,7 +7,7 @@ public class BanquetState : WeddingPhase
         JsonStateManager.SaveState(wedding, "WeddingState.json");
         wedding.WeddingPhase = new SummarizeState();
         IOSystem.DeclareBanquet();
-        Console.ReadKey();
-        Console.Clear();
+        Console.ReadLine();
+        IOSystem.Clear();
     }
 }

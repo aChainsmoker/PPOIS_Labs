@@ -1,6 +1,6 @@
 ﻿namespace Lab1;
 
-public class ResultSummarizer
+public static class ResultSummarizer
 {
     public static int Summarize(Wedding wedding)
     {
@@ -48,14 +48,14 @@ public class ResultSummarizer
         return amountOfPoints;
     }
 
-    public static bool CalculateDeadEnd(Wedding wedding, List<uint> prices)
-    {
-        if (prices.Min() > wedding.SharedBudget)
-        {
-            wedding.WeddingPhase = new LostGameState();
-            return true;
-        }
-
-        return false;
-    }
+    // public static bool CalculateDeadEnd(Wedding wedding, List<uint> prices)
+    // {
+    //     if (prices.Min() > wedding.SharedBudget)
+    //     {
+    //         wedding.WeddingPhase = new LostGameState();
+    //         return true;
+    //     }
+    //
+    //     return false;
+    // }
 }

@@ -2,18 +2,18 @@
 package "Lab1" {
 
   class Wedding {
-    - WeddingPhase _weddingPhase
-    - Groom _groom
-    - Fiancee _fiancee
-    - Ceremony _ceremony
-    - Banquet _banquet
-    - WeddingPlace _weddingPlace
-    - List<Guest> _guests
-    - int _sharedBudget
-    - bool isConcluded
-    + WeddingPhaseString : string
+    - _weddingPhase: WeddingPhase
+    - _groom: Groom
+    - _fiancee: Fiancee
+    - _ceremony: Ceremony
+    - _banquet: Banquet
+    - _weddingPlace: WeddingPlace
+    - _guests: List<Guest>
+    - _sharedBudget: int
+    - isConcluded: bool
+    + WeddingPhaseString: string
     + ChangeState()
-    + SharedBudget : int
+    + SharedBudget: int
   }
 
   abstract class WeddingPhase {
@@ -71,46 +71,46 @@ package "Lab1" {
   WeddingPhase <|-- LostGameState
 
   class ResultSummarizer {
-    + Summarize(wedding: Wedding) : int
-    + CalculateDeadEnd(wedding: Wedding, prices: List<uint>) : bool
+    + Summarize(wedding: Wedding): int
+    + CalculateDeadEnd(wedding: Wedding, prices: List<uint>): bool
   }
 
   class Banquet {
-    - List<Guest> _guests
-    - List<Dish> _dishes
+    - _guests: List<Guest>
+    - _dishes: List<Dish>
     + Dishes: List<Dish>
   }
 
   class Ceremony {
-    - List<Guest> _guests
-    - Groom _groom
-    - Fiancee _fiancee
+    - _guests: List<Guest>
+    - _groom: Groom
+    - _fiancee: Fiancee
     + Guests: List<Guest>
     + DeclareHusbandAndWife(groom: Groom, fiancee: Fiancee)
   }
 
   class Dish {
-    - string _name
-    - uint _price
-    - uint _foodPower
+    - _name: string
+    - _price: uint
+    - _foodPower: uint
     + Name: string
     + Price: uint
     + FoodPower: uint
   }
 
   class Guest {
-    - string _name
-    - uint _hungerLevel
+    - _name: string
+    - _hungerLevel: uint
     + Name: string
     + HungerLevel: uint
   }
 
   class Newlywed {
-    - uint _budget
-    - string _name
-    - Suit _suit
-    - bool _isMarried
-    - Ring _ring
+    - _budget: uint
+    - _name: string
+    - _suit: Suit
+    - _isMarried: bool
+    - _ring: Ring
     + Budget: uint
     + Name: string
     + Suit: Suit
@@ -120,34 +120,46 @@ package "Lab1" {
   }
 
   class Groom {
-    + Groom(string _name)
+    + Groom(_name: string)
     + Groom()
   }
   Groom --|> Newlywed
 
   class Fiancee {
-    + Fiancee(string _name)
+    + Fiancee(_name: string)
     + Fiancee()
   }
   Fiancee --|> Newlywed
 
   class WeddingAttribute {
-    - uint _price
-    - AttributePrestige _attributePrestige
-    - string _brand
+    - _price: uint
+    - _attributePrestige: AttributePrestige
+    - _brand: string
     + Price: uint
     + Brand: string
     + Prestige: AttributePrestige
   }
+  
+  class WeddingPlace {
+    - _date: DateTime
+    - _price: uint
+    - _guestCapacity: uint
+    - _location: string
+    + Date: DateTime
+    + Price: uint
+    + GuestCapacity: uint
+    + Location: string
+    + WeddingPlace(price: uint, date: DateTime, guestCapacity: uint, location: string)
+  }
 
   class Ring {
-    + Ring(uint price, string brand)
+    + Ring(price: uint, brand: string)
   }
   Ring --|> WeddingAttribute
   Newlywed "1" o-- "1" Ring
 
   class Suit {
-    + Suit(uint price, string brand)
+    + Suit(price: uint, brand: string)
   }
   Suit --|> WeddingAttribute
   Newlywed "1" o-- "1" Suit
@@ -155,18 +167,18 @@ package "Lab1" {
   WeddingAttribute "1" o-- "1" AttributePrestige
 
   class RingStore {
-    - string[] _brands
-    - List<Ring> _rings
+    - _brands: string[]
+    - _rings: List<Ring>
     + Rings: List<Ring>
     + AssignTheRings(wedding: Wedding, ringIndex: int)
   }
   RingStore "1" *-- "*" Ring
 
   class SuitStore {
-    - string[] _menBrands
-    - string[] _womenBrands
-    - List<Suit> _menSuits
-    - List<Suit> _womenSuits
+    - _menBrands: string[]
+    - _womenBrands: string[]
+    - _menSuits: List<Suit>
+    - _womenSuits: List<Suit>
     + MenSuits: List<Suit>
     + WomenSuits: List<Suit>
     + AssignTheSuitToTheGroom(wedding: Wedding, suitIndex: int)
@@ -175,16 +187,16 @@ package "Lab1" {
   SuitStore "1" *-- "*" Suit
 
   class WeddingMap {
-    - List<WeddingPlace> _weddingPlaces
-    - string[] _locations
+    - _weddingPlaces: List<WeddingPlace>
+    - _locations: string[]
     + WeddingPlaces: List<WeddingPlace>
     + AssignThePlace(wedding: Wedding, indexOfPlace: int)
   }
   WeddingMap "1" *-- "*" WeddingPlace
 
   class WeddingMenu {
-    - List<KeyValuePair<string, uint>> _menu
-    - List<Dish> _dishes
+    - _menu: List<KeyValuePair<string, uint>>
+    - _dishes: List<Dish>
     + Dishes: List<Dish>
     + AssignTheDishes(wedding: Wedding, indexesOfDishes: int[])
   }
@@ -197,25 +209,23 @@ package "Lab1" {
   }
 
   class JsonStateManager {
-    - GetFilePath(fileName: string) : string
+    - GetFilePath(fileName: string): string
     {static} + SaveState<T>(state: T, fileName: string)
-    {static} + LoadState<T>(fileName: string) : T
+    {static} + LoadState<T>(fileName: string): T
     {static} + DeleteState(fileName: string)
   }
 
-  Wedding "1" o-- "1" Banquet
+  Wedding "1" *-- "1" Banquet
   Wedding "1" o-- "1" Ceremony
   Wedding "1" o-- "1" WeddingPlace
   Wedding "1" o-- "1" Groom
   Wedding "1" o-- "1" Fiancee
-  Wedding "1" o-- "*" Guest
+  Wedding "1" *-- "*" Guest
 
   Banquet "1" *-- "*" Dish
 
-  Ceremony "1" o-- "*" Guest
-  Ceremony "1" --> "1" Groom
-  Ceremony "1" --> "1" Fiancee
-
-  Newlywed --> "*" Guest
+  Ceremony "1" *-- "*" Guest
+  Ceremony "1" o-- "1" Groom
+  Ceremony "1" o-- "1" Fiancee
 }
 @enduml

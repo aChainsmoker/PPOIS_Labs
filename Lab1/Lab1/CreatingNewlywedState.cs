@@ -9,7 +9,7 @@ public class CreatingNewlywedState : WeddingPhase
         wedding.Groom = new Groom(husbandName);
         wedding.Fiancee = new Fiancee(wifeName);
         wedding.SharedBudget = (int)(wedding.Groom.Budget + wedding.Fiancee.Budget);
-        Console.Clear();
+        IOSystem.Clear();
         wedding.WeddingPhase = new ChoosingWeddingPlaceState();
     }
 }

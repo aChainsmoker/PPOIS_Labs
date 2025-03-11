@@ -15,8 +15,14 @@ public class IOSystemTests
         Console.SetOut(_stringWriter);
     }
 
+    [TestCleanup]
+    public void Cleanup()
+    {
+        JsonStateManager.DeleteState("WeddingState.json");
+    }
+
     [TestMethod]
-    public void ChooseNameForNewlyweds_ValidInput_ReturnsCorrectNames()
+    public void ChooseNameForNewlywedsTest()
     {
         _stringReader = new StringReader("John\nJane\n");
         Console.SetIn(_stringReader);
@@ -28,7 +34,7 @@ public class IOSystemTests
     }
 
     [TestMethod]
-    public void ChooseWeddingPlace_ValidInput_ReturnsCorrectIndex()
+    public void ChooseWeddingPlaceTest()
     {
         var weddingMap = new WeddingMap
         {
@@ -46,25 +52,10 @@ public class IOSystemTests
         Assert.AreEqual(0, indexOfPlace);
     }
 
-    [TestMethod]
-    [ExpectedException(typeof(System.FormatException))]
-    public void ChooseWeddingPlace_InvalidInput_ThrowsFormatException()
-    {
-        var weddingMap = new WeddingMap
-        {
-            WeddingPlaces = new List<WeddingPlace>
-            {
-                new WeddingPlace (1000, DateTime.Now, 100, "Location1")
-            }
-        };
-        _stringReader = new StringReader("invalid\n");
-        Console.SetIn(_stringReader);
-
-        IOSystem.ChooseWeddingPlace(weddingMap, out int indexOfPlace);
-    }
+   
 
     [TestMethod]
-    public void DeclareMarriage_ValidInput_PrintsCorrectMessage()
+    public void DeclareMarriageTest()
     {
         var groom = new Groom { Name = "John" };
         var fiancee = new Fiancee { Name = "Jane" };
@@ -72,11 +63,11 @@ public class IOSystemTests
         IOSystem.DeclareMarriage(groom, fiancee);
 
         var output = _stringWriter.ToString();
-        Assert.AreEqual("John and Jane got married!\r\n", output);
+        Assert.AreEqual("John and Jane got married!\r\n\nPress enter to continue...\r\n", output);
     }
 
     [TestMethod]
-    public void GetPrestigeString_ValidInput_ReturnsCorrectString()
+    public void GetPrestigeStringTest()
     {
         var prestige = AttributePrestige.Premium;
 
@@ -86,7 +77,7 @@ public class IOSystemTests
     }
 
     [TestMethod]
-    public void GetPrestigeFromString_ValidInput_ReturnsCorrectPrestige()
+    public void GetPrestigeFromStringTest()
     {
         var prestigeString = "Premium";
 
@@ -96,7 +87,7 @@ public class IOSystemTests
     }
     
     [TestMethod]
-    public void ChooseWeddingDressForFiancee_ValidInput_ReturnsCorrectIndex()
+    public void ChooseWeddingDressForFianceeTest()
     {
         var suitStore = new SuitStore
         {
@@ -114,25 +105,10 @@ public class IOSystemTests
         Assert.AreEqual(0, indexOfFianceeDress);
     }
 
-    [TestMethod]
-    [ExpectedException(typeof(System.FormatException))]
-    public void ChooseWeddingDressForFiancee_InvalidInput_ThrowsFormatException()
-    {
-        var suitStore = new SuitStore
-        {
-            WomenSuits = new List<Suit>
-            {
-                new Suit (1000, "Brand1")
-            }
-        };
-        _stringReader = new StringReader("invalid\n");
-        Console.SetIn(_stringReader);
 
-        IOSystem.ChooseWeddingDressForFiancee(suitStore, out int indexOfFianceeDress);
-    }
 
     [TestMethod]
-    public void ChooseWeddingDressForGroom_ValidInput_ReturnsCorrectIndex()
+    public void ChooseWeddingDressForGroomTest()
     {
         var suitStore = new SuitStore
         {
@@ -149,26 +125,10 @@ public class IOSystemTests
 
         Assert.AreEqual(1, indexOfGroomDress);
     }
+    
 
     [TestMethod]
-    [ExpectedException(typeof(System.FormatException))]
-    public void ChooseWeddingDressForGroom_InvalidInput_ThrowsFormatException()
-    {
-        var suitStore = new SuitStore
-        {
-            MenSuits = new List<Suit>
-            {
-                new Suit (1000, "Brand1")
-            }
-        };
-        _stringReader = new StringReader("invalid\n");
-        Console.SetIn(_stringReader);
-
-        IOSystem.ChooseWeddingDressForGroom(suitStore, out int indexOfGroomDress);
-    }
-
-    [TestMethod]
-    public void ChooseWeddingRing_ValidInput_ReturnsCorrectIndex()
+    public void ChooseWeddingRingTest()
     {
         var ringStore = new RingStore
         {
@@ -187,24 +147,7 @@ public class IOSystemTests
     }
 
     [TestMethod]
-    [ExpectedException(typeof(System.FormatException))]
-    public void ChooseWeddingRing_InvalidInput_ThrowsFormatException()
-    {
-        var ringStore = new RingStore
-        {
-            Rings = new List<Ring>
-            {
-                new Ring (1000, "Brand1")
-            }
-        };
-        _stringReader = new StringReader("invalid\n");
-        Console.SetIn(_stringReader);
-
-        IOSystem.ChooseWeddingRing(ringStore, out int indexOfRing);
-    }
-
-    [TestMethod]
-    public void ChooseWeddingMenu_ValidInput_ReturnsCorrectIndexes()
+    public void ChooseWeddingMenuTest()
     {
         var weddingMenu = new WeddingMenu
         {
@@ -222,25 +165,10 @@ public class IOSystemTests
         CollectionAssert.AreEqual(new int[] { 0, 1, -1, -1, -1 }, indexesOfWeddingMenu);
     }
 
-    [TestMethod]
-    [ExpectedException(typeof(System.FormatException))]
-    public void ChooseWeddingMenu_InvalidInput_ThrowsFormatException()
-    {
-        var weddingMenu = new WeddingMenu
-        {
-            Dishes = new List<Dish>
-            {
-                new Dish ("Dish1", 100, 50) ,
-            }
-        };
-        _stringReader = new StringReader("invalid\n");
-        Console.SetIn(_stringReader);
-
-        IOSystem.ChooseWeddingMenu(weddingMenu, out int[] indexesOfWeddingMenu);
-    }
+    
 
     [TestMethod]
-    public void InviteGuests_ValidInput_ReturnsCorrectNames()
+    public void InviteGuestsTest()
     {
         _stringReader = new StringReader("2\nGuest1\nGuest2\n");
         Console.SetIn(_stringReader);
@@ -249,40 +177,31 @@ public class IOSystemTests
 
         CollectionAssert.AreEqual(new string[] { "Guest1", "Guest2" }, names);
     }
+    
 
     [TestMethod]
-    [ExpectedException(typeof(System.FormatException))]
-    public void InviteGuests_InvalidInput_ThrowsFormatException()
-    {
-        _stringReader = new StringReader("invalid\n");
-        Console.SetIn(_stringReader);
-
-        IOSystem.InviteGuests(out string[] names);
-    }
-
-    [TestMethod]
-    public void DeclareBanquet_PrintsCorrectMessage()
+    public void DeclareBanquetTest()
     {
         IOSystem.DeclareBanquet();
 
         var output = _stringWriter.ToString();
-        Assert.AreEqual("Banquet was held\r\n", output);
+        Assert.AreEqual("Banquet was held\r\n\nPress enter to continue...\r\n", output);
     }
 
     [TestMethod]
-    public void DeclarePhotoSession_PrintsCorrectMessage()
+    public void DeclarePhotoSessionTest()
     {
         IOSystem.DeclarePhotoSession();
 
         var output = _stringWriter.ToString();
-        Assert.AreEqual("Photo session was held\r\n", output);
+        Assert.AreEqual("Photo session was held\r\n\nPress enter to continue...\r\n", output);
     }
 
     [TestMethod]
-    public void DisplaySummarazation_PrintsCorrectMessage()
+    public void DisplaySummarazationTest()
     {
         int amountOfPoints = 1000;
-        var expectedOutput = $"Your final result: {amountOfPoints}\r\nNo saved state found.\n\r\n\nRecord: \r\n";
+        var expectedOutput = $"Your final result: {amountOfPoints}\r\nNo saved state found.\n\r\n\nRecord: \r\n\nPress enter to continue...\r\n";
 
         IOSystem.DisplaySummarazation(amountOfPoints);
 
@@ -291,7 +210,7 @@ public class IOSystemTests
     }
 
     [TestMethod]
-    public void PrintBudget_PrintsCorrectMessage()
+    public void PrintBudgetTest()
     {
         int budget = 5000;
 
@@ -300,13 +219,37 @@ public class IOSystemTests
         var output = _stringWriter.ToString();
         Assert.AreEqual($"Current balance: {budget}\n\r\n", output);
     }
-
+    
     [TestMethod]
-    public void PrintLoserScreen_PrintsCorrectMessage()
-    {
-        IOSystem.PrintLoserScreen();
+public void GetTheWeddingStateStringTest()
+{
+    Assert.AreEqual("CreatingNewlywedState", IOSystem.GetTheWeddingStateString(new CreatingNewlywedState()));
+    Assert.AreEqual("ChoosingGroomDressState", IOSystem.GetTheWeddingStateString(new ChoosingGroomDressState()));
+    Assert.AreEqual("ChoosingFianceeDressState", IOSystem.GetTheWeddingStateString(new ChoosingFianceeDressState()));
+    Assert.AreEqual("ChoosingRingState", IOSystem.GetTheWeddingStateString(new ChoosingRingState()));
+    Assert.AreEqual("BanquetState", IOSystem.GetTheWeddingStateString(new BanquetState()));
+    Assert.AreEqual("CeremonyState", IOSystem.GetTheWeddingStateString(new CeremonyState()));
+    Assert.AreEqual("ChoosingWeddingMenuState", IOSystem.GetTheWeddingStateString(new ChoosingWeddingMenuState()));
+    Assert.AreEqual("ChoosingWeddingPlaceState", IOSystem.GetTheWeddingStateString(new ChoosingWeddingPlaceState()));
+    Assert.AreEqual("GuestInvitationState", IOSystem.GetTheWeddingStateString(new GuestInvitationState()));
+    Assert.AreEqual("PhotoSessionState", IOSystem.GetTheWeddingStateString(new PhotoSessionState()));
+    Assert.AreEqual("SummarizeState", IOSystem.GetTheWeddingStateString(new SummarizeState()));
+}
 
-        var output = _stringWriter.ToString();
-        Assert.AreEqual("You couldn't afford anything from the next list. You lost. That happens\r\n", output);
-    }
+[TestMethod]
+public void GetTheWeddingPhaseFromStringTest()
+{
+    Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("CreatingNewlywedState"), typeof(CreatingNewlywedState));
+    Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("ChoosingGroomDressState"), typeof(ChoosingGroomDressState));
+    Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("ChoosingFianceeDressState"), typeof(ChoosingFianceeDressState));
+    Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("ChoosingRingState"), typeof(ChoosingRingState));
+    Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("BanquetState"), typeof(BanquetState));
+    Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("CeremonyState"), typeof(CeremonyState));
+    Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("ChoosingWeddingMenuState"), typeof(ChoosingWeddingMenuState));
+    Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("ChoosingWeddingPlaceState"), typeof(ChoosingWeddingPlaceState));
+    Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("GuestInvitationState"), typeof(GuestInvitationState));
+    Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("PhotoSessionState"), typeof(PhotoSessionState));
+    Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("SummarizeState"), typeof(SummarizeState));
+}
+
 }

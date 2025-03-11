@@ -6,7 +6,7 @@ namespace WeddingTests;
 public class ResultSummarizerTests
 {
     [TestMethod]
-    public void Summarize_ShouldCalculateCorrectPoints()
+    public void SummarizeTest()
     {
         var wedding = new Wedding
         {
@@ -42,27 +42,5 @@ public class ResultSummarizerTests
         int result = ResultSummarizer.Summarize(wedding);
 
         Assert.AreEqual(expectedPoints, result);
-    }
-
-    [TestMethod]
-    public void CalculateDeadEnd_ShouldReturnTrue_WhenBudgetIsTooLow()
-    {
-        var wedding = new Wedding { SharedBudget = 100 };
-        var prices = new List<uint> { 150, 200, 250 };
-
-        bool isDeadEnd = ResultSummarizer.CalculateDeadEnd(wedding, prices);
-
-        Assert.IsTrue(isDeadEnd);
-    }
-
-    [TestMethod]
-    public void CalculateDeadEnd_ShouldReturnFalse_WhenBudgetIsSufficient()
-    {
-        var wedding = new Wedding { SharedBudget = 300 };
-        var prices = new List<uint> { 150, 200, 250 };
-
-        bool isDeadEnd = ResultSummarizer.CalculateDeadEnd(wedding, prices);
-
-        Assert.IsFalse(isDeadEnd);
     }
 }
