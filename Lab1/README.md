@@ -1,6 +1,6 @@
 # Модель свадьбы
 
-## 1. Основные классы
+## 1. Основной класс
 
 ### Wedding
 **Описание**: Класс, представляющий свадьбу. Управляет процессами и состояниями.
@@ -56,9 +56,6 @@
 
 ### SummarizeState
 **Описание**: Подведение итогов, начисление очков.
-
-### LostGameState
-**Описание**: Проигрыш, если бюджет заканчивается до завершения свадьбы.
 
 ## 3. Атрибуты свадьбы
 
@@ -121,7 +118,7 @@
 ### Ceremony
 **Описание**: Проведение свадебной церемонии.
 - **Методы**:
-  - `DeclareHusbandAndWife(Groom groom, Fiancee fiancee)` – женит пару.
+  - `DeclareHusbandAndWife(Groom groom, Fiancee fiancee)` – провозглашает пару мужем и женой.
 
 ### Banquet
 **Описание**: Проведение банкета.
@@ -134,13 +131,13 @@
 **Описание**: Подсчитывает очки по итогам свадьбы.
 - **Методы**:
   - `Summarize(Wedding wedding) : int` – подсчитывает финальные очки.
-  - `CalculateDeadEnd(Wedding wedding, List<uint> prices) : bool` – проверяет, не закончился ли бюджет.
 
 ## 8. Система управления состояниями
 
 ### JsonStateManager
 **Описание**: Управляет сохранением и загрузкой состояний свадьбы.
 - **Методы**:
+  - `GetFilePath(string fileName) : string` – Формирует путь к файлам сохранения.
   - `SaveState<T>(T state, string fileName)` – сохраняет состояние в JSON-файл.
   - `LoadState<T>(string fileName) : T` – загружает состояние из JSON-файла.
   - `DeleteState(string fileName)` – удаляет сохранённое состояние.
@@ -158,7 +155,22 @@
   - `ChooseWeddingMenu(WeddingMenu weddingMenu, out int[] indexesOfWeddingMenu)` – выбор меню.
   - `InviteGuests(out string[] names)` – приглашение гостей.
   - `DeclareMarriage(Groom groom, Fiancee fiancee)` – объявление брака.
+  - `DeclareBanquet()` – объпроведениеявление банкета.
+  - `DeclarePhotoSession()` – проведение фотосессии.
   - `DisplaySummarazation(int amountOfPoints)` – отображение финального результата.
+  - `DisplayWeddingDishes(List<Dish> weddingDishes)` – отображение доступных блюд.
+  - `DisplayWeddingDresses(List<Suit> weddingDresses)` – отображение доступных свадебных нарядов.
+  - `DisplayWeddingRings(List<Ring> weddingRings)` – отображение доступных обручальных колец.
+  - `DisplayWeddingPlaces(List<WeddingPlace> weddingPlaces)` – отображение доступных мест дял проведения свадьбы.
+  - `GetPrestigeString(AttributePrestige attributePrestige) : string` – получение престижности атрибута в формате строки.
+  - `GetPrestigeFromString(string attributePrestigeString) : AttributePrestige` – получение престижности артрибута из строки.
+  - `PrintBudget(int budget)` – отображение оставшегося бюджета.
+  - `GetTheWeddingStateString(WeddingPhase weddingPhase) : string` – получение состояния свадьбы в формате строки.
+  - `GetTheWeddingPhaseFromString(string weddingPhaseString) : WeddingPhase` – получение состояния свадьбы из строки.
+  - `TakeTheNumericInput : int` – извлечение корректного ввода.
+  - `CheckIfTheIndexInTheArrayBounds<T>(int index, List<T> array) : bool` – проверка на соответсвие введённого индекса размера массива.
+  - `TakeTheCorrectNumericIndex<T>(List<T> array) : int` – извлечение корректного числового ввода.
+  - `Clear()` – очистка консоли.
 
 ---
 
