@@ -4,7 +4,7 @@ namespace Lab1;
 
 public class Wedding
 {
-    private WeddingPhase _weddingPhase;
+    private WeddingPhase _currentCurrentWeddingPhase;
     private Groom _groom;
     private Fiancee _fiancee;
     private Ceremony _ceremony;
@@ -21,9 +21,9 @@ public class Wedding
     public WeddingPlace WeddingPlace { get => _weddingPlace; set => _weddingPlace = value; }
     public List<Guest> Guests { get => _guests; set => _guests = value; }
 
-    public string WeddingPhaseString { get; set; }
+    public string CurrentWeddingPhaseString { get; set; }
     
-    [JsonIgnore]public WeddingPhase WeddingPhase{get => _weddingPhase; set => _weddingPhase = value; }
+    [JsonIgnore]public WeddingPhase CurrentWeddingPhase{get => _currentCurrentWeddingPhase; set => _currentCurrentWeddingPhase = value; }
 
     public int SharedBudget
     {
@@ -34,23 +34,24 @@ public class Wedding
     public bool IsConcluded{get => _isConcluded;
         set
         {
-            if((_weddingPhase is SummarizeState summarizeState))
+            if((_currentCurrentWeddingPhase is SummarizeState summarizeState))
                 _isConcluded = value;
         }
     }
 
-    public Wedding(WeddingPhase weddingPhase)
+    public Wedding(WeddingPhase currentCurrentWeddingPhase)
     {
-        _weddingPhase = weddingPhase;
+        _currentCurrentWeddingPhase = currentCurrentWeddingPhase;
         _guests = new List<Guest>();
         _banquet = new Banquet(_guests);
+        _ceremony = new Ceremony();
         
     }
 
     public Wedding() { }
+
     public void ChangeState()
     {
-        _weddingPhase.GetToTheNextPhase(this);
+        _currentCurrentWeddingPhase.GetToTheNextPhase(this);
     }
-    
 }

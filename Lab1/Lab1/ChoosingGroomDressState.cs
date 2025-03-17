@@ -8,8 +8,10 @@ public class ChoosingGroomDressState : WeddingPhase
         SuitStore suitStore = new SuitStore();
         IOSystem.PrintBudget(wedding.SharedBudget);
         IOSystem.ChooseWeddingDressForGroom(suitStore, out int indexOfGroomDress);
+        if (wedding.Groom.Suit != null)
+            suitStore.ReturnMoney(wedding, wedding.Groom);
         suitStore.AssignTheSuitToTheGroom(wedding, indexOfGroomDress);
         IOSystem.Clear();
-        wedding.WeddingPhase = new ChoosingRingState();
+        wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();;
     }
 }

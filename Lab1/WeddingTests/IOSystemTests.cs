@@ -201,7 +201,7 @@ public class IOSystemTests
     public void DisplaySummarazationTest()
     {
         int amountOfPoints = 1000;
-        var expectedOutput = $"Your final result: {amountOfPoints}\r\nNo saved state found.\n\r\n\nRecord: \r\n\nPress enter to continue...\r\n";
+        var expectedOutput = $"Your final result: 1000\r\nNo saved state found.\n\r\n\nRecord: \r\n";
 
         IOSystem.DisplaySummarazation(amountOfPoints);
 
@@ -250,6 +250,69 @@ public void GetTheWeddingPhaseFromStringTest()
     Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("GuestInvitationState"), typeof(GuestInvitationState));
     Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("PhotoSessionState"), typeof(PhotoSessionState));
     Assert.IsInstanceOfType(IOSystem.GetTheWeddingPhaseFromString("SummarizeState"), typeof(SummarizeState));
+}
+
+[TestMethod]
+public void DisplayFinalResultUnmarriedTest()
+{
+    var wedding = new Wedding { 
+        Groom = new Groom("John"), 
+        Fiancee = new Fiancee("Jane")
+    };
+    var stringWriter = new StringWriter();
+    Console.SetOut(stringWriter);
+
+    IOSystem.DisplayFinalResult(wedding);
+
+    StringAssert.Contains(stringWriter.ToString(), "did not get married :/");
+}
+
+[TestMethod]
+public void DisplayCeremonyRequirementsTest()
+{
+    var stringWriter = new StringWriter();
+    Console.SetOut(stringWriter);
+
+    IOSystem.DisplayCeremonyRequirements();
+
+    StringAssert.Contains(stringWriter.ToString(), "names for newlyweds, rings");
+}
+
+[TestMethod]
+public void ClearTest()
+{
+    var originalOut = Console.Out;
+    Console.SetOut(TextWriter.Null);
+    
+    try 
+    {
+        IOSystem.Clear();
+    }
+    finally 
+    {
+        Console.SetOut(originalOut);
+    }
+}
+
+[TestMethod]
+public void ShowAlreadyMarriedStatusTest()
+{
+    var stringWriter = new StringWriter();
+    Console.SetOut(stringWriter);
+
+    IOSystem.ShowAlreadyMarriedStatus();
+
+    StringAssert.Contains(stringWriter.ToString(), "Ceremony was already held.");
+}
+
+[TestMethod]
+public void ShowAlreadyHeldBanquetStatusTest()
+{
+    var stringWriter = new StringWriter();
+    Console.SetOut(stringWriter);
+
+    IOSystem.ShowAlreadyHeldBanquetStatus();
+    StringAssert.Contains(stringWriter.ToString(), "Banquet was already held.");
 }
 
 }

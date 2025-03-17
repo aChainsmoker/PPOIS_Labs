@@ -22,7 +22,7 @@ namespace Lab1
                 string filePath = GetFilePath(fileName);
                 if(state is Wedding wedding)
                 {
-                    wedding.WeddingPhaseString = IOSystem.GetTheWeddingStateString(wedding.WeddingPhase);
+                    wedding.CurrentWeddingPhaseString = IOSystem.GetTheWeddingStateString(wedding.CurrentWeddingPhase);
                 }
                 string json = JsonSerializer.Serialize(state, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(filePath, json);

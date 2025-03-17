@@ -8,8 +8,10 @@ public class ChoosingWeddingMenuState : WeddingPhase
         IOSystem.PrintBudget(wedding.SharedBudget);
         WeddingMenu weddingMenu = new WeddingMenu();
         IOSystem.ChooseWeddingMenu(weddingMenu, out int[] indexesOfWeddingMenu);
+        if (wedding.Banquet.Dishes.Count != 0)
+            weddingMenu.ReturnMoney(wedding);
         weddingMenu.AssignTheDishes(wedding, indexesOfWeddingMenu);
         IOSystem.Clear();
-        wedding.WeddingPhase = new GuestInvitationState();
+        wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();;
     }
 }

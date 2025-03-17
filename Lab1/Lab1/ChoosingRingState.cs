@@ -8,8 +8,10 @@ public class ChoosingRingState : WeddingPhase
         RingStore ringStore = new RingStore();
         IOSystem.PrintBudget(wedding.SharedBudget);
         IOSystem.ChooseWeddingRing(ringStore,  out int indexOfRing);
+        if(wedding.Groom.Ring != null)
+            ringStore.ReturnMoney(wedding);
         ringStore.AssignTheRings(wedding, indexOfRing);
         IOSystem.Clear();
-        wedding.WeddingPhase = new ChoosingWeddingMenuState();
+        wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();;
     }
 }

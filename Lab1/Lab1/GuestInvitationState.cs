@@ -8,7 +8,6 @@ public class GuestInvitationState : WeddingPhase
         IOSystem.InviteGuests(out string[] names);
         wedding.Fiancee.InviteGuests(names, wedding);
         IOSystem.Clear();
-        wedding.Ceremony = new Ceremony(wedding.Groom, wedding.Fiancee, wedding.Guests);
-        wedding.WeddingPhase = new CeremonyState();
+        wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();;
     }
 }

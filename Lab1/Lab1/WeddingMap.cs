@@ -34,4 +34,9 @@ public class WeddingMap
         wedding.WeddingPlace = _weddingPlaces[indexOfPlace];
         wedding.SharedBudget -= (int)_weddingPlaces[indexOfPlace].Price;
     }
+
+    public void ReturnMoney(Wedding wedding)
+    {
+        wedding.SharedBudget += (int)wedding.WeddingPlace.Price;
+    }
 }

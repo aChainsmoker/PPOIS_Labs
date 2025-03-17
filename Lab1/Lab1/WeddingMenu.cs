@@ -40,5 +40,13 @@ public class WeddingMenu
             wedding.SharedBudget -= (int)_dishes[indexesOfDishes[i]].Price;
         }
     }
+    
+    public void ReturnMoney(Wedding wedding)
+    {
+        for (int i = 0; i < wedding.Banquet.Dishes.Count; i++)
+        {
+            wedding.SharedBudget += (int)wedding.Banquet.Dishes[i].Price;
+        }
+    }
 
 }

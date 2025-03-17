@@ -8,6 +8,6 @@ public class PhotoSessionState : WeddingPhase
         IOSystem.DeclarePhotoSession();
         Console.ReadLine();
         IOSystem.Clear();
-        wedding.WeddingPhase = new BanquetState();
+        wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();;
     }
 }

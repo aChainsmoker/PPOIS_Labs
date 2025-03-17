@@ -13,16 +13,20 @@ namespace WeddingTests
         [TestInitialize]
         public void Setup()
         {
-            _wedding = new Wedding(new CreatingNewlywedState());
+            _wedding = new Wedding(new ChoosingWeddingPhaseState());
             Console.SetIn(new StringReader(
-                "John\nJane\n" +
-                "1\n" +
-                "1\n" +
-                "1\n" +
-                "1\n" +
-                "1\n1\n1\n1\n1\n" +
-                "2\nAlice\nBob\n" +
-                "\n\n\n\n"
+                "1\n" + "John\nJane\n" + "8\n9\n10\n11\n" +
+                "2\n" + "1\n" +
+                "3\n" + "1\n" +
+                "4\n" + "1\n" +
+                "5\n" + "1\n" + "8\n9\n10\n11\n" +
+                "6\n1\n1\n1\n1\n1\n" +
+                "7\n2\nAlice\nBob\n" +
+                "8\n\n" +
+                "9\n\n" +
+                "10\n\n" +
+                "11\n\n" +
+                "\n"
             ));
         }
 
@@ -35,37 +39,9 @@ namespace WeddingTests
         [TestMethod]
         public void StateTransitionTest()
         {
-            _wedding.ChangeState();
-            Assert.IsInstanceOfType(_wedding.WeddingPhase, typeof(ChoosingWeddingPlaceState));
-            
-            _wedding.ChangeState();
-            Assert.IsInstanceOfType(_wedding.WeddingPhase, typeof(ChoosingFianceeDressState));
-            
-            _wedding.ChangeState();
-            Assert.IsInstanceOfType(_wedding.WeddingPhase, typeof(ChoosingGroomDressState));
-            
-            _wedding.ChangeState();
-            Assert.IsInstanceOfType(_wedding.WeddingPhase, typeof(ChoosingRingState));
-            
-            _wedding.ChangeState();
-            Assert.IsInstanceOfType(_wedding.WeddingPhase, typeof(ChoosingWeddingMenuState));
-            
-            _wedding.ChangeState();
-            Assert.IsInstanceOfType(_wedding.WeddingPhase, typeof(GuestInvitationState));
-            
-            _wedding.ChangeState();
-            Assert.IsInstanceOfType(_wedding.WeddingPhase, typeof(CeremonyState));
-            
-            _wedding.ChangeState();
-            Assert.IsInstanceOfType(_wedding.WeddingPhase, typeof(PhotoSessionState));
-            
-            _wedding.ChangeState();
-            Assert.IsInstanceOfType(_wedding.WeddingPhase, typeof(BanquetState));
-            
-            _wedding.ChangeState();
-            Assert.IsInstanceOfType(_wedding.WeddingPhase, typeof(SummarizeState));
-            
-            _wedding.ChangeState();
+            while(_wedding.IsConcluded == false)
+                _wedding.ChangeState();
+
             
             Assert.IsTrue(_wedding.IsConcluded);
         }

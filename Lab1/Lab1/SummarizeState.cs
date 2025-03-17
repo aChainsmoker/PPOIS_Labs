@@ -8,7 +8,9 @@ public class SummarizeState : WeddingPhase
         wedding.IsConcluded = true;
         int amountOfPoints = ResultSummarizer.Summarize(wedding);
         IOSystem.DisplaySummarazation(amountOfPoints);
-
+        IOSystem.DisplayFinalResult(wedding);
+        IOSystem.AskForPressingEnter();
+        
         try
         {
             if(amountOfPoints > Convert.ToInt32(JsonStateManager.LoadState<string>("WeddingRecord.json")))

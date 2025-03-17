@@ -8,9 +8,16 @@ public class CeremonyState : WeddingPhase
     {
         JsonStateManager.SaveState(wedding, "WeddingState.json");
         wedding.Ceremony.DeclareHusbandAndWife(wedding.Groom, wedding.Fiancee);
-        IOSystem.DeclareMarriage(wedding.Groom, wedding.Fiancee);
+        if(wedding.Ceremony.WasHeld == true)
+            IOSystem.ShowAlreadyMarriedStatus();
+        else
+        {
+            IOSystem.DeclareMarriage(wedding.Groom, wedding.Fiancee);
+            wedding.Ceremony.WasHeld = true;
+        }
+
         Console.ReadLine();
         IOSystem.Clear();
-        wedding.WeddingPhase = new PhotoSessionState();
+        wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();;
     }
 }

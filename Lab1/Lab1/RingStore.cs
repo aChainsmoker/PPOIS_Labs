@@ -26,4 +26,9 @@ public class RingStore
         wedding.Fiancee.Ring = _rings[ringIndex];
         wedding.SharedBudget -= (int)_rings[ringIndex].Price;
     }
+
+    public void ReturnMoney(Wedding wedding)
+    {
+        wedding.SharedBudget += (int)wedding.Groom.Ring.Price;
+    }
 }

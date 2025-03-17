@@ -1,28 +1,45 @@
 ﻿@startuml
-state "Creating Newlyweds" as CreatingNewlywedState
-state "Choosing Wedding Place" as ChoosingWeddingPlaceState
-state "Choosing Fiancee Dress" as ChoosingFianceeDressState
-state "Choosing Groom Dress" as ChoosingGroomDressState
-state "Choosing Ring" as ChoosingRingState
-state "Choosing Wedding Menu" as ChoosingWeddingMenuState
-state "Guest Invitation" as GuestInvitationState
-state "Ceremony" as CeremonyState
-state "Photo Session" as PhotoSessionState
-state "Banquet" as BanquetState
-state "Summarization" as SummarizeState
+scale 800 width
 
-[*] --> CreatingNewlywedState
+[*] --> ChoosingWeddingPhaseState
 
-CreatingNewlywedState --> ChoosingWeddingPlaceState : Names Assigned
-ChoosingWeddingPlaceState --> ChoosingFianceeDressState : Places is chosen
-ChoosingFianceeDressState --> ChoosingGroomDressState : Fiancee dress is chosen
-ChoosingGroomDressState --> ChoosingRingState : Groom dress is chosen
-ChoosingRingState --> ChoosingWeddingMenuState : Ring is chosen
-ChoosingWeddingMenuState --> GuestInvitationState : Dishes are chosen
-GuestInvitationState --> CeremonyState : Guests are invited
-CeremonyState --> PhotoSessionState : Ceremony was held
-PhotoSessionState --> BanquetState : Photo Session was held
-BanquetState --> SummarizeState : Banquet was held
+state ChoosingWeddingPhaseState {
+  [*] --> ChoosingPhase
+  ChoosingPhase --> PhaseSelected : selecting phase
+}
 
-SummarizeState --> [*] : Results are summed up
+ChoosingWeddingPhaseState --> CreatingNewlywedState : 1. Create newlyweds
+CreatingNewlywedState --> ChoosingWeddingPhaseState : [done]
+
+ChoosingWeddingPhaseState --> ChoosingWeddingPlaceState : 2. Choose place
+ChoosingWeddingPlaceState --> ChoosingWeddingPhaseState : [done]
+
+ChoosingWeddingPhaseState --> ChoosingFianceeDressState : 3. Choose fiancee dress
+ChoosingFianceeDressState --> ChoosingWeddingPhaseState : [done]
+
+ChoosingWeddingPhaseState --> ChoosingGroomDressState : 4. Choose groom dress
+ChoosingGroomDressState --> ChoosingWeddingPhaseState : [done]
+
+ChoosingWeddingPhaseState --> ChoosingRingState : 5. Choose rings
+ChoosingRingState --> ChoosingWeddingPhaseState : [done]
+
+ChoosingWeddingPhaseState --> ChoosingWeddingMenuState : 6. Choose menu
+ChoosingWeddingMenuState --> ChoosingWeddingPhaseState : [done]
+
+ChoosingWeddingPhaseState --> GuestInvitationState : 7. Invite guests
+GuestInvitationState --> ChoosingWeddingPhaseState : [done]
+
+ChoosingWeddingPhaseState --> CeremonyState : 8. Start ceremony\n<<requires full setup>>
+CeremonyState --> ChoosingWeddingPhaseState : [done]
+
+ChoosingWeddingPhaseState --> PhotoSessionState : 9. Start photos\n<<requires basic setup>>
+PhotoSessionState --> ChoosingWeddingPhaseState : [done]
+
+ChoosingWeddingPhaseState --> BanquetState : 10. Start banquet\n<<requires full setup>>
+BanquetState --> ChoosingWeddingPhaseState : [done]
+
+ChoosingWeddingPhaseState --> SummarizeState : 11. Summarize
+SummarizeState --> [*] : [wedding concluded]
+
+
 @enduml

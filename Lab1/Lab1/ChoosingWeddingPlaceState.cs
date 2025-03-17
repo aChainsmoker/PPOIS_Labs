@@ -8,8 +8,10 @@ public class ChoosingWeddingPlaceState : WeddingPhase
         IOSystem.PrintBudget(wedding.SharedBudget);
         WeddingMap weddingMap = new WeddingMap();
         IOSystem.ChooseWeddingPlace(weddingMap, out int indexOfPlace);
+        if (wedding.WeddingPlace != null)
+            weddingMap.ReturnMoney(wedding);
         weddingMap.AssignThePlace(wedding, indexOfPlace);
         IOSystem.Clear();
-        wedding.WeddingPhase = new ChoosingFianceeDressState();
+        wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();;
     }
 }

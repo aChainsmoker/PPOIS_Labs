@@ -8,7 +8,7 @@ public class ResultSummarizerTests
     [TestMethod]
     public void SummarizeTest()
     {
-        var wedding = new Wedding
+        var wedding = new Wedding()
         {
             Groom = new Groom
             {
@@ -27,12 +27,12 @@ public class ResultSummarizerTests
                 {
                     new Dish("", 100, 300)
                 }
-            }
+            },
         };
 
         Ceremony ceremony = new Ceremony(wedding.Groom, wedding.Fiancee, null);
         wedding.Ceremony = ceremony;
-        ceremony.Guests = new List<Guest>
+        wedding.Guests = new List<Guest>
         {
             new Guest ("")
         };

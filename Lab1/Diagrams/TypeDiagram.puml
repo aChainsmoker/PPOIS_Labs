@@ -53,7 +53,7 @@ package "Lab1" {
   class SummarizeState {
     + GetToTheNextPhase(wedding: Wedding)
   }
-  class LostGameState {
+  class ChoosingWeddingPhaseState {
     + GetToTheNextPhase(wedding: Wedding)
   }
 
@@ -68,7 +68,54 @@ package "Lab1" {
   WeddingPhase <|-- PhotoSessionState
   WeddingPhase <|-- BanquetState
   WeddingPhase <|-- SummarizeState
-  WeddingPhase <|-- LostGameState
+  WeddingPhase <|-- ChoosingWeddingPhaseState
+
+class IOSystem {
+    {static} + ChooseNameForNewlyweds(out groomName: string, out fianceeName: string)
+    {static} + ChooseWeddingPlace(weddingMap: WeddingMap, out indexOfPlace: int)
+    {static} + ChooseWeddingDressForFiancee(suitStore: SuitStore, out indexOfFianceeDress: int)
+    {static} + ChooseWeddingDressForGroom(suitStore: SuitStore, out indexOfGroomDress: int)
+    {static} + ChooseWeddingRing(ringStore: RingStore, out indexOfRing: int)
+    {static} + ChooseWeddingMenu(weddingMenu: WeddingMenu, out indexesOfWeddingMenu: int[])
+    {static} + ChooseWeddingPhase(out indexOfWeddingPhase: int)
+    {static} + InviteGuests(out names: String[])
+    {static} + DeclareMarriage(groom: Groom, fiancee: Fiancee)
+    {static} + DeclareBanquet()
+    {static} + DeclarePhotoSession()
+    {static} + DisplaySummarazation(amountOfPoints: int)
+    {static} + AskForPressingEnter()
+    {static} + GetPrestigeString(attributePrestige: AttributePrestige)
+    {static} + GetPrestigeFromString(attributePrestigeString: string)
+    {static} + PrintBudget(budget: int)
+    {static} + GetTheWeddingStateString(weddingPhase: WeddingPhase)
+    {static} + GetTheWeddingPhaseFromString(weddingPhaseString: string)
+    {static} + Clear()
+    {static} + DisplayCeremonyRequirements()
+    {static} + DisplayPhotoSessionRequirements()
+    {static} + DisplayBanquetRequirements()
+    {static} + DisplaySummarizationRequirements()
+    {static} + DisplayFinalResult(wedding: Wedding)
+    {static} + ShowAlreadyMarriedStatus()
+    {static} + ShowAlreadyHeldBanquetStatus()
+    
+    {static} - DisplayWeddingDishes(weddingDishes: List~Dish~)
+    {static} - DisplayWeddingDresses(weddingDresses: List~Suit~)
+    {static} - DisplayWeddingRings(weddingRings: List~Ring~)
+    {static} - DisplayWeddingPlaces(weddingPlaces: List~WeddingPlace~)
+    {static} - TakeTheNumericInput()
+    {static} - CheckIfTheIndexInTheArrayBounds<T>(index: int, array: List~T~)
+    {static} - TakeTheCorrectNumericIndex<T>(array: List~T~)
+    {static} - TakeTheCorrectStringInput()
+    {static} - DisplayMainMenu()
+}
+
+ class PhaseRerouter {
+    {static} - _weddingPhases: List~WeddingPhase~
+    {static} + WeddingPhases: List~WeddingPhase~ {get; set}
+    {static} + AssignThePhase(wedding: Wedding, index: int)
+    {static} - CheckIfWeddingCorrespondToBasicRequirements(wedding: Wedding): bool
+    {static} - CheckIfWeddingCorrespondToAdditionalRequirements(wedding: Wedding): bool
+  }
 
   class ResultSummarizer {
     + Summarize(wedding: Wedding): int
@@ -78,14 +125,18 @@ package "Lab1" {
   class Banquet {
     - _guests: List<Guest>
     - _dishes: List<Dish>
+    - _wasHeld: bool
     + Dishes: List<Dish>
+    + WasHeld: bool
   }
 
   class Ceremony {
     - _guests: List<Guest>
     - _groom: Groom
     - _fiancee: Fiancee
+    - _wasHeld: bool
     + Guests: List<Guest>
+    + WasHeld: bool
     + DeclareHusbandAndWife(groom: Groom, fiancee: Fiancee)
   }
 
@@ -214,9 +265,11 @@ package "Lab1" {
     {static} + LoadState<T>(fileName: string): T
     {static} + DeleteState(fileName: string)
   }
+    
+  PhaseRerouter "1" *-- "*" WeddingPhase
 
   Wedding "1" *-- "1" Banquet
-  Wedding "1" o-- "1" Ceremony
+  Wedding "1" *-- "1" Ceremony
   Wedding "1" o-- "1" WeddingPlace
   Wedding "1" o-- "1" Groom
   Wedding "1" o-- "1" Fiancee

@@ -76,12 +76,12 @@ namespace WeddingTests
         [TestMethod]
         public void WeddingPhaseStringTest()
         {
-            _testWedding.WeddingPhase = new ChoosingGroomDressState();
+            _testWedding.CurrentWeddingPhase = new ChoosingGroomDressState();
 
             JsonStateManager.SaveState(_testWedding, TestFileName);
             var loaded = JsonStateManager.LoadState<Wedding>(TestFileName);
 
-            Assert.AreEqual("ChoosingGroomDressState", loaded.WeddingPhaseString);
+            Assert.AreEqual("ChoosingGroomDressState", loaded.CurrentWeddingPhaseString);
         }
 
         [TestMethod]

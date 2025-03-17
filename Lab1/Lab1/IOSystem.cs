@@ -1,13 +1,14 @@
+﻿
 ﻿namespace Lab1;
 public static class IOSystem
 {
-    public static void ChooseNameForNewlyweds(out string husbandName, out string wifeName)
+    public static void ChooseNameForNewlyweds(out string groomName, out string fianceeName)
     {
         Console.WriteLine("Enter newlywed's names");
         Console.WriteLine("Enter husband's name");
-        husbandName = Console.ReadLine();
+        groomName = TakeTheCorrectStringInput();
         Console.WriteLine("Enters wife's name");
-        wifeName = Console.ReadLine();
+        fianceeName = TakeTheCorrectStringInput();
     }
 
     public static void ChooseWeddingPlace(WeddingMap weddingMap, out int indexOfPlace)
@@ -42,12 +43,19 @@ public static class IOSystem
     public static void ChooseWeddingMenu(WeddingMenu weddingMenu, out int[] indexesOfWeddingMenu)
     {
         indexesOfWeddingMenu = new int[Banquet.AmountOfDishes];
-        Console.WriteLine("Choose wedding menu");
+        Console.WriteLine("Choose 5 dishes");
         DisplayWeddingDishes(weddingMenu.Dishes);
         for(int i = 0; i< Banquet.AmountOfDishes; i++)
             indexesOfWeddingMenu[i] = TakeTheCorrectNumericIndex(weddingMenu.Dishes) - 1;
     }
 
+    public static void ChooseWeddingPhase(out int indexOfWeddingPhase)
+    {
+       Console.WriteLine("Choose wedding phase");
+       DisplayMainMenu();
+       indexOfWeddingPhase = TakeTheCorrectNumericIndex(PhaseRerouter.WeddingPhases) - 1;
+    }
+    
     public static void InviteGuests(out string[] names)
     {
         Console.WriteLine("Enter amount of guests");
@@ -66,7 +74,7 @@ public static class IOSystem
         for (int i = 0; i < amountOfGuests; i++)
         {
             Console.WriteLine("Enter name of guest");
-            string? name = Console.ReadLine();
+            string? name = TakeTheCorrectStringInput();
             names[i] = name;
         }
     }
@@ -74,25 +82,29 @@ public static class IOSystem
     public static void DeclareMarriage(Groom groom, Fiancee fiancee)
     {
         Console.WriteLine($"{groom.Name} and {fiancee.Name} got married!");
-        Console.WriteLine("\nPress enter to continue...");
+        AskForPressingEnter();
     }
     
     public static void DeclareBanquet()
     {
         Console.WriteLine("Banquet was held");
-        Console.WriteLine("\nPress enter to continue...");
+        AskForPressingEnter();
     }
     
     public static void DeclarePhotoSession()
     {
         Console.WriteLine("Photo session was held");
-        Console.WriteLine("\nPress enter to continue...");
+        AskForPressingEnter();
     }
 
     public static void DisplaySummarazation(int amountOfPoints)
     {
         Console.WriteLine($"Your final result: {amountOfPoints}");
         Console.WriteLine($"\nRecord: {JsonStateManager.LoadState<string>("WeddingRecord.json")}");
+    }
+
+    public static void AskForPressingEnter()
+    {
         Console.WriteLine("\nPress enter to continue...");
     }
 
@@ -188,6 +200,7 @@ public static class IOSystem
             GuestInvitationState => "GuestInvitationState",
             PhotoSessionState => "PhotoSessionState",
             SummarizeState => "SummarizeState",
+            ChoosingWeddingPhaseState => "ChoosingWeddingPhaseState",
         };
         return weddingPhaseString;
     }
@@ -207,6 +220,7 @@ public static class IOSystem
             "GuestInvitationState" => new GuestInvitationState(),
             "PhotoSessionState" => new PhotoSessionState(),
             "SummarizeState" => new SummarizeState(),
+            "ChoosingWeddingPhaseState" => new ChoosingWeddingPhaseState(),
         };
         return weddingPhase;
     }
@@ -248,8 +262,83 @@ public static class IOSystem
         }
     }
 
+    private static string TakeTheCorrectStringInput()
+    {
+        while (true)
+        {
+            string? input = Console.ReadLine();
+            if(input != null && input.Length > 0)
+                return input;
+            else
+                Console.WriteLine("Input must be not empty!\n");
+        }
+            
+    }
+
     public static void Clear()
     {
         if(!Console.IsOutputRedirected) Console.Clear();
     }
+
+    private static void DisplayMainMenu()
+    {
+        Console.WriteLine("1. Choose newlyweds names");
+        Console.WriteLine("2. Choose wedding place");
+        Console.WriteLine("3. Choose fiancee dress");
+        Console.WriteLine("4. Choose groom dress");
+        Console.WriteLine("5. Choose wedding ring");
+        Console.WriteLine("6. Choose wedding menu");
+        Console.WriteLine("7. Invite guests");
+        Console.WriteLine("8. Arrange ceremony");
+        Console.WriteLine("9. Arrange photo session");
+        Console.WriteLine("10. Arrange banquet");
+        Console.WriteLine("11. Count the score");
+    }
+
+    public static void DisplayCeremonyRequirements()
+    {
+        Console.WriteLine("For ceremony you at least must choose names for newlyweds, rings, suits, place, guests and dishes");
+    }
+    
+    public static void DisplayPhotoSessionRequirements()
+    {
+        Console.WriteLine("For photo session you at least must choose names for newlyweds, rings, suits and place");
+    }
+    
+    public static void DisplayBanquetRequirements()
+    {
+        Console.WriteLine("For banquet you at least must choose names for newlyweds, rings, suits, place, guests and dishes");
+    }
+
+    public static void DisplaySummarizationRequirements()
+    {
+        Console.WriteLine("For summarization you at least must choose names for newlyweds, rings, suits, place, guests and dishes ");
+    }
+
+    public static void DisplayFinalResult(Wedding wedding)
+    {
+        if (wedding.Groom.IsMarried == false)
+        {
+            Console.WriteLine($"\n{wedding.Groom.Name} and {wedding.Fiancee.Name} did not get married :/");
+            return;
+        }
+        
+        Console.WriteLine($"\n{wedding.Groom.Name} and {wedding.Fiancee.Name} got married with {wedding.Groom.Ring.Brand} rings.");
+        Console.WriteLine($"Groom was wearing {wedding.Groom.Suit.Brand} suit and Fiancee was wearing {wedding.Fiancee.Suit.Brand} dress");
+        Console.WriteLine($"Ceremony was held at {wedding.WeddingPlace.Location} with {wedding.Guests.Count} guests");
+        if(wedding.Banquet.Dishes.Count > 0)
+            Console.WriteLine($"Guests were served with {wedding.Banquet.Dishes.Count} dishes");
+    }
+    
+    public static void ShowAlreadyMarriedStatus()
+    {
+        Console.WriteLine("Ceremony was already held.");
+    }
+
+    public static void ShowAlreadyHeldBanquetStatus()
+    {
+        Console.WriteLine("Banquet was already held.");
+    }
 }
+
+

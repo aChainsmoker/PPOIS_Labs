@@ -41,4 +41,9 @@ public class SuitStore
         wedding.Fiancee.Suit = _womenSuits[suitIndex];
         wedding.SharedBudget -= (int)_womenSuits[suitIndex].Price;
     }
+
+    public void ReturnMoney(Wedding wedding, Newlywed newlywed)
+    {
+        wedding.SharedBudget += (int)newlywed.Suit.Price;
+    }
 }
