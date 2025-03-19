@@ -245,7 +245,7 @@ public static class IOSystem
 
     private static bool CheckIfTheIndexInTheArrayBounds<T>(int index, List<T> array)
     {
-        if(index > array.Count || index < 0)
+        if(index > array.Count || index <= 0)
             return false;
         return true;
     }
@@ -313,6 +313,10 @@ public static class IOSystem
     public static void DisplaySummarizationRequirements()
     {
         Console.WriteLine("For summarization you at least must choose names for newlyweds, rings, suits, place, guests and dishes ");
+    }
+    public static void DisplayBuyingAttributesRequirements()
+    {
+        Console.WriteLine("For buying wedding attributes you at least must choose names for newlyweds");
     }
 
     public static void DisplayFinalResult(Wedding wedding)

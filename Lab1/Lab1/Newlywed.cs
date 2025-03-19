@@ -22,7 +22,7 @@ public class Newlywed
         _name = name;
     }
 
-    public void InviteGuests(string[] names, Wedding wedding)
+    public static void InviteGuests(string[] names, Wedding wedding)
     {
         try
         {

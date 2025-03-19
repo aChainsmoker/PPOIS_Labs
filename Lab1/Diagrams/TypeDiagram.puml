@@ -94,10 +94,10 @@ class IOSystem {
     {static} + DisplayPhotoSessionRequirements()
     {static} + DisplayBanquetRequirements()
     {static} + DisplaySummarizationRequirements()
+    {static} + DisplayBuyingAttributesRequirements()
     {static} + DisplayFinalResult(wedding: Wedding)
     {static} + ShowAlreadyMarriedStatus()
     {static} + ShowAlreadyHeldBanquetStatus()
-    
     {static} - DisplayWeddingDishes(weddingDishes: List~Dish~)
     {static} - DisplayWeddingDresses(weddingDresses: List~Suit~)
     {static} - DisplayWeddingRings(weddingRings: List~Ring~)
@@ -110,8 +110,8 @@ class IOSystem {
 }
 
  class PhaseRerouter {
-    {static} - _weddingPhases: List~WeddingPhase~
-    {static} + WeddingPhases: List~WeddingPhase~ {get; set}
+    {static} - _weddingPhases: List<WeddingPhase>
+    {static} + WeddingPhases: List<WeddingPhase>
     {static} + AssignThePhase(wedding: Wedding, index: int)
     {static} - CheckIfWeddingCorrespondToBasicRequirements(wedding: Wedding): bool
     {static} - CheckIfWeddingCorrespondToAdditionalRequirements(wedding: Wedding): bool

@@ -1,45 +1,51 @@
 ﻿@startuml
 scale 800 width
 
-[*] --> ChoosingWeddingPhaseState
+[*] --> ChoosingWeddingPhaseState : program starts
 
 state ChoosingWeddingPhaseState {
   [*] --> ChoosingPhase
   ChoosingPhase --> PhaseSelected : selecting phase
 }
 
-ChoosingWeddingPhaseState --> CreatingNewlywedState : 1. Create newlyweds
-CreatingNewlywedState --> ChoosingWeddingPhaseState : [done]
+ChoosingWeddingPhaseState --> CreatingNewlywedState : Choosing option 1
+CreatingNewlywedState --> ChoosingWeddingPhaseState : phase's over
 
-ChoosingWeddingPhaseState --> ChoosingWeddingPlaceState : 2. Choose place
-ChoosingWeddingPlaceState --> ChoosingWeddingPhaseState : [done]
+ChoosingWeddingPhaseState --> ChoosingWeddingPlaceState : Choosing option 2
+ChoosingWeddingPlaceState --> ChoosingWeddingPhaseState : phase's over
 
-ChoosingWeddingPhaseState --> ChoosingFianceeDressState : 3. Choose fiancee dress
-ChoosingFianceeDressState --> ChoosingWeddingPhaseState : [done]
+ChoosingWeddingPhaseState --> ChoosingFianceeDressState : Choosing option 3
+note on link : Requires: Groom, Fiancee
+ChoosingFianceeDressState --> ChoosingWeddingPhaseState : phase's over
 
-ChoosingWeddingPhaseState --> ChoosingGroomDressState : 4. Choose groom dress
-ChoosingGroomDressState --> ChoosingWeddingPhaseState : [done]
+ChoosingWeddingPhaseState --> ChoosingGroomDressState : Choosing option 4
+note on link : Requires: Groom, Fiancee
+ChoosingGroomDressState --> ChoosingWeddingPhaseState : phase's over
 
-ChoosingWeddingPhaseState --> ChoosingRingState : 5. Choose rings
-ChoosingRingState --> ChoosingWeddingPhaseState : [done]
+ChoosingWeddingPhaseState --> ChoosingRingState : Choosing option 5
+note on link : Requires: Groom, Fiancee
+ChoosingRingState --> ChoosingWeddingPhaseState : phase's over
 
-ChoosingWeddingPhaseState --> ChoosingWeddingMenuState : 6. Choose menu
-ChoosingWeddingMenuState --> ChoosingWeddingPhaseState : [done]
+ChoosingWeddingPhaseState --> ChoosingWeddingMenuState : Choosing option 6
+ChoosingWeddingMenuState --> ChoosingWeddingPhaseState : phase's over
 
-ChoosingWeddingPhaseState --> GuestInvitationState : 7. Invite guests
-GuestInvitationState --> ChoosingWeddingPhaseState : [done]
+ChoosingWeddingPhaseState --> GuestInvitationState : Choosing option 7
+GuestInvitationState --> ChoosingWeddingPhaseState : phase's over
 
-ChoosingWeddingPhaseState --> CeremonyState : 8. Start ceremony\n<<requires full setup>>
-CeremonyState --> ChoosingWeddingPhaseState : [done]
+ChoosingWeddingPhaseState --> CeremonyState : Choosing option 8
+note on link : Requires: Groom, Fiancee, Rings, Suits, Guests, Dishes
+CeremonyState --> ChoosingWeddingPhaseState : phase's over
 
-ChoosingWeddingPhaseState --> PhotoSessionState : 9. Start photos\n<<requires basic setup>>
-PhotoSessionState --> ChoosingWeddingPhaseState : [done]
+ChoosingWeddingPhaseState --> PhotoSessionState : Choosing option 9
+note on link : Requires: Groom, Fiancee, Rings, Suits
+PhotoSessionState --> ChoosingWeddingPhaseState : phase's over
 
-ChoosingWeddingPhaseState --> BanquetState : 10. Start banquet\n<<requires full setup>>
-BanquetState --> ChoosingWeddingPhaseState : [done]
+ChoosingWeddingPhaseState --> BanquetState : Choosing option 10
+note on link : Requires: Groom, Fiancee, Rings, Suits, Guests, Dishes
+BanquetState --> ChoosingWeddingPhaseState : phase's over
 
-ChoosingWeddingPhaseState --> SummarizeState : 11. Summarize
-SummarizeState --> [*] : [wedding concluded]
-
+ChoosingWeddingPhaseState --> SummarizeState : Choosing option 11
+note on link : Requires: Groom, Fiancee, Rings, Suits, Guests, Dishes
+SummarizeState --> [*] : wedding concluded
 
 @enduml

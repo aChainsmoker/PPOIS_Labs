@@ -10,46 +10,50 @@ public static class PhaseRerouter
     public static void AssignThePhase(Wedding wedding, int index)
     {
         wedding.CurrentWeddingPhase = _weddingPhases[index];
-        
-        if (!CheckIfWeddingCorrespondToBasicRequirements(wedding))
+
+
+        switch (wedding.CurrentWeddingPhase)
         {
-            switch (wedding.CurrentWeddingPhase)
-            {
-                case CeremonyState ceremonyState:
-                    IOSystem.DisplayCeremonyRequirements();
-                    break;
-                case PhotoSessionState photoSessionState:
+            case ChoosingRingState:
+            case ChoosingFianceeDressState:
+            case ChoosingGroomDressState:
+                if (!CheckIfTheWeddingHasGroomAndFiancee(wedding))
+                {
+                    IOSystem.DisplayBuyingAttributesRequirements();
+                    wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();
+                }
+                break;
+            case PhotoSessionState:
+                if (!CheckIfWeddingCorrespondToBasicRequirements(wedding))
+                {
                     IOSystem.DisplayPhotoSessionRequirements();
-                    break;
-                case BanquetState banquetState:
-                    IOSystem.DisplayBanquetRequirements();
-                    break;
-                case SummarizeState summarizeState:
-                    IOSystem.DisplaySummarizationRequirements();
-                    break;
-                default:
-                    return;
-            }
-            wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();
-        }
-        else if (!CheckIfWeddingCorrespondToAdditionalRequirements(wedding))
-        {
-            switch (wedding.CurrentWeddingPhase)
-            {
-                case CeremonyState ceremonyState:
+                    wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();
+                }
+
+                break;
+            case CeremonyState:
+                if (!CheckIfWeddingCorrespondToAdditionalRequirements(wedding))
+                {
                     IOSystem.DisplayCeremonyRequirements();
-                    break;
-                case BanquetState banquetState:
+                wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();
+                }
+                break;
+            case BanquetState:
+                if (!CheckIfWeddingCorrespondToAdditionalRequirements(wedding))
+                {
                     IOSystem.DisplayBanquetRequirements();
-                    break;
-                case SummarizeState summarizeState:
+                wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();
+                }
+                break;
+            case SummarizeState:
+                if (!CheckIfWeddingCorrespondToAdditionalRequirements(wedding))
+                {
                     IOSystem.DisplaySummarizationRequirements();
-                    break;
-                default:
-                    return;
-            }
-            wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();
+                wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();
+                }
+                break;
         }
+        
     }
 
     private static bool CheckIfWeddingCorrespondToBasicRequirements(Wedding wedding)
@@ -63,6 +67,13 @@ public static class PhaseRerouter
     private static bool CheckIfWeddingCorrespondToAdditionalRequirements(Wedding wedding)
     {
         if(wedding.Guests.Count == 0 || wedding.Banquet.Dishes.Count == 0)
+            return false;
+        return true;
+    }
+
+    private static bool CheckIfTheWeddingHasGroomAndFiancee(Wedding wedding)
+    {
+        if(wedding.Groom == null || wedding.Fiancee == null)
             return false;
         return true;
     }

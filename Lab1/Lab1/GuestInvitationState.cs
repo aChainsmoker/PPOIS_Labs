@@ -6,7 +6,7 @@ public class GuestInvitationState : WeddingPhase
     {
         JsonStateManager.SaveState(wedding, "WeddingState.json");
         IOSystem.InviteGuests(out string[] names);
-        wedding.Fiancee.InviteGuests(names, wedding);
+        Newlywed.InviteGuests(names, wedding);
         IOSystem.Clear();
         wedding.CurrentWeddingPhase = new ChoosingWeddingPhaseState();;
     }
