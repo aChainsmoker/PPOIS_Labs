@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:model="clr-namespace:TrainScheduler.Model"
+             x:Class="TrainScheduler.Controls.TreeView" 
+             x:Name="TreeViewControl">
+    <Frame CornerRadius="10"
+           BorderColor="LightGray"
+           Padding="0"
+           Margin="0,0,0,10">
+        <ScrollView>
+            <VerticalStackLayout Spacing="10" Padding="10">
+                <toolkit:Expander>
+                    <toolkit:Expander.Header>
+                        <Border BackgroundColor="#512BD4" 
+                                Padding="20,15"
+                                Stroke="LightGray"
+                                StrokeThickness="2"
+                                StrokeShape="RoundRectangle 10">
+                            <Label Text="Trains" 
+                                   FontSize="18"
+                                   TextColor="White"
+                                   FontAttributes="Bold"/>
+                        </Border>
+                    </toolkit:Expander.Header>
+
+                    <VerticalStackLayout Spacing="8" Padding="15,0,0,0">
+                        <ListView ItemsSource="{Binding Trains, Source={x:Reference TreeViewControl}}"
+                                  SelectionMode="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="model:TrainModel">
+                                    <ViewCell>
+                                        <toolkit:Expander>
+                                            <toolkit:Expander.Header>
+                                                <Border BackgroundColor="#A03FF2"
+                                                        Padding="18,12"
+                                                        Stroke="LightGray"
+                                                        StrokeThickness="1.5"
+                                                        StrokeShape="RoundRectangle 8">
+                                                    <Label Text="{Binding Number, StringFormat='Train № {0}'}"
+                                                           FontSize="16"
+                                                           FontAttributes="Bold"/>
+                                                </Border>
+                                            </toolkit:Expander.Header>
+
+                                            <VerticalStackLayout Spacing="6" Padding="20,0,0,0">
+
+                                                <toolkit:Expander>
+                                                    <toolkit:Expander.Header>
+                                                        <Border BackgroundColor="#C590F2"
+                                                                Padding="15,10"
+                                                                Stroke="LightGray"
+                                                                StrokeThickness="1"
+                                                                StrokeShape="RoundRectangle 6">
+                                                            <Label Text="Departure Station"
+                                                                   FontSize="14"
+                                                                   FontAttributes="Bold"/>
+                                                        </Border>
+                                                    </toolkit:Expander.Header>
+                                                    <Border BackgroundColor="#C5B4F2"
+                                                            Padding="15,8"
+                                                            Stroke="LightGray"
+                                                            StrokeThickness="0.5"
+                                                            StrokeShape="RoundRectangle 4"
+                                                            Margin="10,0,0,5">
+                                                        <Label Text="{Binding DepartureStation}"
+                                                               FontSize="13"/>
+                                                    </Border>
+                                                </toolkit:Expander>
+
+                                                <toolkit:Expander>
+                                                    <toolkit:Expander.Header>
+                                                        <Border BackgroundColor="#C590F2"
+                                                                Padding="15,10"
+                                                                Stroke="LightGray"
+                                                                StrokeThickness="1"
+                                                                StrokeShape="RoundRectangle 6">
+                                                            <Label Text="Arrival Station"
+                                                                   FontSize="14"
+                                                                   FontAttributes="Bold"/>
+                                                        </Border>
+                                                    </toolkit:Expander.Header>
+                                                    <Border BackgroundColor="#C5B4F2"
+                                                            Padding="15,8"
+                                                            Stroke="LightGray"
+                                                            StrokeThickness="0.5"
+                                                            StrokeShape="RoundRectangle 4"
+                                                            Margin="10,0,0,5">
+                                                        <Label Text="{Binding ArrivalStation}"
+                                                               FontSize="13"/>
+                                                    </Border>
+                                                </toolkit:Expander>
+
+                                                <toolkit:Expander>
+                                                    <toolkit:Expander.Header>
+                                                        <Border BackgroundColor="#C590F2"
+                                                                Padding="15,10"
+                                                                Stroke="LightGray"
+                                                                StrokeThickness="1"
+                                                                StrokeShape="RoundRectangle 6">
+                                                            <Label Text="Departure Time"
+                                                                   FontSize="14"
+                                                                   FontAttributes="Bold"/>
+                                                        </Border>
+                                                    </toolkit:Expander.Header>
+                                                    <Border BackgroundColor="#C5B4F2"
+                                                            Padding="15,8"
+                                                            Stroke="LightGray"
+                                                            StrokeThickness="0.5"
+                                                            StrokeShape="RoundRectangle 4"
+                                                            Margin="10,0,0,5">
+                                                        <Label Text="{Binding DepartureTime, StringFormat='{0:dd.MM.yyyy HH:mm}'}"
+                                                               FontSize="13"/>
+                                                    </Border>
+                                                </toolkit:Expander>
+
+                                                <toolkit:Expander>
+                                                    <toolkit:Expander.Header>
+                                                        <Border BackgroundColor="#C590F2"
+                                                                Padding="15,10"
+                                                                Stroke="LightGray"
+                                                                StrokeThickness="1"
+                                                                StrokeShape="RoundRectangle 6">
+                                                            <Label Text="Arrival Time"
+                                                                   FontSize="14"
+                                                                   FontAttributes="Bold"/>
+                                                        </Border>
+                                                    </toolkit:Expander.Header>
+                                                    <Border BackgroundColor="#C5B4F2"
+                                                            Padding="15,8"
+                                                            Stroke="LightGray"
+                                                            StrokeThickness="0.5"
+                                                            StrokeShape="RoundRectangle 4"
+                                                            Margin="10,0,0,5">
+                                                        <Label Text="{Binding ArrivalTime, StringFormat='{0:dd.MM.yyyy HH:mm}'}"
+                                                               FontSize="13"/>
+                                                    </Border>
+                                                </toolkit:Expander>
+
+                                                <toolkit:Expander>
+                                                    <toolkit:Expander.Header>
+                                                        <Border BackgroundColor="#C590F2"
+                                                                Padding="15,10"
+                                                                Stroke="LightGray"
+                                                                StrokeThickness="1"
+                                                                StrokeShape="RoundRectangle 6">
+                                                            <Label Text="Travel Time"
+                                                                   FontSize="14"
+                                                                   FontAttributes="Bold"/>
+                                                        </Border>
+                                                    </toolkit:Expander.Header>
+                                                    <Border BackgroundColor="#C5B4F2"
+                                                            Padding="15,8"
+                                                            Stroke="LightGray"
+                                                            StrokeThickness="0.5"
+                                                            StrokeShape="RoundRectangle 4"
+                                                            Margin="10,0,0,5">
+                                                        <Label Text="{Binding FormattedTravelTime}"
+                                                               FontSize="13"/>
+                                                    </Border>
+                                                </toolkit:Expander>
+                                            </VerticalStackLayout>
+                                        </toolkit:Expander>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </VerticalStackLayout>
+                </toolkit:Expander>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Frame>
+</ContentView>

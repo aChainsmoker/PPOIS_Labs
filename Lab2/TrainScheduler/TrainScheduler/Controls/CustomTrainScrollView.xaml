@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TrainScheduler.Controls.CustomTrainScrollView"
+             xmlns:model="clr-namespace:TrainScheduler.Model"
+             x:Name="ScrollViewControl">
+    <Frame CornerRadius="10"
+           BorderColor="LightGray"
+           Padding="0"
+           Margin="0,0,0,10">
+        <ScrollView Padding="10">
+            <CollectionView ItemsSource="{Binding ItemsSource, Source={x:Reference ScrollViewControl}}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" 
+                                      ItemSpacing="0"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:TrainModel">
+                        <Frame CornerRadius="10"
+                               BorderColor="LightGray"
+                               Padding="15"
+                               BackgroundColor="Purple" 
+                               MinimumHeightRequest="100">
+                            <Grid VerticalOptions="Center" 
+                                  RowDefinitions="auto" 
+                                  ColumnDefinitions="*,*,*,*,*,*">
+                                <VerticalStackLayout Grid.Column="0" 
+                                                     HorizontalOptions="Center" 
+                                                     Spacing="3">
+                                    <Label Text="Train Number:" 
+                                           HorizontalOptions="Center"
+                                           FontSize="14"
+                                           TextColor="Gray"/>
+                                    <Label Text="{Binding Number}" 
+                                           HorizontalOptions="Center" 
+                                           FontSize="14"
+                                           Grid.Column="1"
+                                           FontAttributes="Bold"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" 
+                                                     HorizontalOptions="Center" 
+                                                     Spacing="3">
+                                    <Label Text="Departure Station:" 
+                                           HorizontalOptions="Center"
+                                           Grid.Row="1"
+                                           FontSize="14"
+                                           TextColor="Gray"/>
+                                    <Label Text="{Binding DepartureStation}" 
+                                           HorizontalOptions="Center" 
+                                           FontSize="14"
+                                           Grid.Row="1"
+                                           Grid.Column="1"
+                                           FontAttributes="Bold"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="2" 
+                                                     HorizontalOptions="Center" 
+                                                     Spacing="3">
+                                    <Label Text="Arrival Station:" 
+                                           HorizontalOptions="Center"
+                                           Grid.Row="2"
+                                           FontSize="14"
+                                           TextColor="Gray"/>
+                                    <Label Text="{Binding ArrivalStation}" 
+                                           HorizontalOptions="Center" 
+                                           FontSize="14"
+                                           Grid.Row="2"
+                                           Grid.Column="1"
+                                           FontAttributes="Bold"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="3" 
+                                                     HorizontalOptions="Center" 
+                                                     Spacing="3">
+                                    <Label Text="Departure Time:" 
+                                           HorizontalOptions="Center"
+                                           Grid.Row="3"
+                                           FontSize="14"
+                                           TextColor="Gray"/>
+                                    <Label Text="{Binding DepartureTime, StringFormat='{0:dd.MM.yyyy HH:mm}'}" 
+                                           HorizontalOptions="Center" 
+                                           FontSize="14"
+                                           Grid.Row="3"
+                                           Grid.Column="1"
+                                           FontAttributes="Bold"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="4" 
+                                                     HorizontalOptions="Center" 
+                                                     Spacing="3">
+                                    <Label Text="Arrival Time:" 
+                                           HorizontalOptions="Center"
+                                           Grid.Row="4"
+                                           FontSize="14"
+                                           TextColor="Gray"/>
+                                    <Label Text="{Binding ArrivalTime, StringFormat='{0:dd.MM.yyyy HH:mm}'}" 
+                                           HorizontalOptions="Center" 
+                                           FontSize="14"
+                                           Grid.Row="4"
+                                           Grid.Column="1"
+                                           FontAttributes="Bold"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="5" 
+                                                     HorizontalOptions="Center" 
+                                                     Spacing="3">
+                                    <Label Text="Travel Time:" 
+                                           HorizontalOptions="Center"
+                                           Grid.Row="4"
+                                           FontSize="14"
+                                           TextColor="Gray"/>
+                                    <Label HorizontalOptions="Center" 
+                                           FontSize="14" 
+                                           Text="{Binding FormattedTravelTime}"
+                                           Grid.Row="4"
+                                           Grid.Column="1"
+                                           FontAttributes="Bold">
+                                    </Label>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </Frame>
+</ContentView>

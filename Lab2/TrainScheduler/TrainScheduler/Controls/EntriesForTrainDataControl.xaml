@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TrainScheduler.Controls.EntriesForTrainDataControl"
+             xmlns:viewModel="clr-namespace:TrainScheduler.ViewModel"
+             x:DataType="viewModel:AddWindowViewModel">
+    
+    <Grid RowDefinitions="auto, auto, auto, auto, auto, auto, auto, *"
+          ColumnDefinitions="*, auto" >
+        <Entry Placeholder="Train Number" Grid.Row="0" Text="{Binding Number}" Grid.ColumnSpan="2"/>
+        <Entry Placeholder="Departure Station" Grid.Row="1" Text="{Binding DepartureStation}"  Grid.ColumnSpan="2"/>
+        <Entry Placeholder="Arrival Station" Grid.Row="2" Text="{Binding ArrivalStation}"  Grid.ColumnSpan="2"/>
+        <Entry Placeholder="Departure Time" Grid.Row="3" IsReadOnly="True" />
+        <DatePicker Grid.Row="3" Grid.Column="1" Date="{Binding DepartureTime}"/>
+        <TimePicker  Grid.Row="4" Time="{Binding DepartureTimeSpan}"  Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+        <Entry Placeholder="Arrival Time" Grid.Row="5"  IsReadOnly="True"/>
+        <DatePicker  Grid.Row="5" Grid.Column="1" Date="{Binding ArrivalTime}" />
+        <TimePicker  Grid.Row="6" Time="{Binding ArrivalTimeSpan}" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+    </Grid>
+</ContentView>

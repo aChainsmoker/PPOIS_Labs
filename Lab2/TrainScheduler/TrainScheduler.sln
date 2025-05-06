@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35818.85 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainScheduler", "TrainScheduler\TrainScheduler.csproj", "{4456B1BF-8B06-44EF-87E0-EDB631FC045C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4456B1BF-8B06-44EF-87E0-EDB631FC045C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4456B1BF-8B06-44EF-87E0-EDB631FC045C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4456B1BF-8B06-44EF-87E0-EDB631FC045C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4456B1BF-8B06-44EF-87E0-EDB631FC045C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B1B5BB3-BE2F-41C8-B3DD-91B30573C85E}
+	EndGlobalSection
+EndGlobal

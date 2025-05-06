@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TrainScheduler.Controls.SelectableEntriesForTrainDataConrol"
+             xmlns:viewModel="clr-namespace:TrainScheduler.ViewModel"
+             x:DataType="viewModel:SearchWithFiltersWindowViewModel"
+             xmlns:controls="clr-namespace:TrainScheduler.Controls">
+    
+    <Grid ColumnDefinitions="*, auto" RowDefinitions="44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44 * ">
+        <Grid RowDefinitions="auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, *"
+      ColumnDefinitions="*, auto" Grid.Column="0" Grid.RowSpan="12" >
+            <Entry Placeholder="Train Number" Grid.Row="0" Text="{Binding Number}" Grid.ColumnSpan="2"/>
+            <Entry Placeholder="Departure Station" Grid.Row="1" Text="{Binding DepartureStation}"  Grid.ColumnSpan="2"/>
+            <Entry Placeholder="Arrival Station" Grid.Row="2" Text="{Binding ArrivalStation}"  Grid.ColumnSpan="2"/>
+            <Entry Placeholder="Departure Time Low Limit" Grid.Row="3" IsReadOnly="True" />
+            <DatePicker Grid.Row="3" Grid.Column="1" Date="{Binding DepartureTimeLowLimit}"/>
+            <TimePicker  Grid.Row="4" Time="{Binding DepartureTimeLowLimitSpan}"  Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+            <Entry Placeholder="Departure Time Upper Limit" Grid.Row="5" IsReadOnly="True" />
+            <DatePicker Grid.Row="5" Grid.Column="1" Date="{Binding DepartureTimeUpperLimit}"/>
+            <TimePicker  Grid.Row="6" Time="{Binding DepartureTimeUpperLimitSpan}"  Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+            <Entry Placeholder="Arrival Time Low Limit" Grid.Row="7"  IsReadOnly="True"/>
+            <DatePicker  Grid.Row="7" Grid.Column="1" Date="{Binding ArrivalTimeLowLimit}" />
+            <TimePicker  Grid.Row="8" Time="{Binding ArrivalTimeLowLimitSpan}" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+            <Entry Placeholder="Arrival Time Upper Limit" Grid.Row="9"  IsReadOnly="True"/>
+            <DatePicker  Grid.Row="9" Grid.Column="1" Date="{Binding ArrivalTimeUpperLimit}" />
+            <TimePicker  Grid.Row="10" Time="{Binding ArrivalTimeUpperLimitSpan}" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+            <Entry Placeholder="Travel Time" Grid.Row="11" Text="{Binding TravelTime}"  Grid.ColumnSpan="2"/>
+        </Grid>
+        <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding NumberCheck}"/>
+        <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding DepartureStationCheck}"/>
+        <CheckBox Grid.Row="2" Grid.Column="1" IsChecked="{Binding ArrivalStationCheck}"/>
+        <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding DepartureTimeCheck}"/>
+        <CheckBox Grid.Row="7" Grid.Column="1" IsChecked="{Binding ArrivalTimeCheck}"/>
+        <CheckBox Grid.Row="11" Grid.Column="1" IsChecked="{Binding TravelTimeCheck}"/>
+    </Grid>
+
+</ContentView>
