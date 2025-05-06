@@ -26,31 +26,31 @@ TrainsScheduler - это оконное приложение с возможно
 ### Возможности
 
 #### Просмотр записей в постраничном виде
-![ListView](images/ListView.png)
+![ListView](TrainScheduler/TrainScheduler/images/ListView.png)
 
 ---
 
 #### Просмотр записей в древовидном формте
-![ListView](images/TreeView.png)
+![ListView](TrainScheduler/TrainScheduler/images/TreeView.png)
 
 ---
 
 #### Добавление записей в отдельном окне
-![ListView](images/AddWindow.png)
+![ListView](TrainScheduler/TrainScheduler/images/AddWindow.png)
 
 ---
 
 #### Поиск записей в отдельном окне с гибким фильтром
-![ListView](images/SearchWindow.png)
+![ListView](TrainScheduler/TrainScheduler/images/SearchWindow.png)
 
 ---
 
 #### Удаление записей в отдельном окне
-![ListView](images/DeleteWindow.png)
+![ListView](TrainScheduler/TrainScheduler/images/DeleteWindow.png)
 
 ---
 
 #### Загрузка и сохранение записей в xml формате с указанием местоположения
-![ListView](images/SaveWindow.png)
+![ListView](TrainScheduler/TrainScheduler/images/SaveWindow.png)
 
 ---
