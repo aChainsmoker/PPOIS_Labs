@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using TrainScheduler.DatabaseControl;
 using TrainScheduler.Model;
 using TrainScheduler.Utilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace TrainScheduler.ViewModel;
 
@@ -52,7 +52,7 @@ public partial class DeleteWindowViewModel : SearchWithFiltersWindowViewModel
             return;
         }
 
-        _trainListViewModel.Trains.ToList().RemoveAll(train => trainListToDelete.Contains(train));
+        (_trainListViewModel.Trains as DbSet<TrainModel>).ToList().RemoveAll(train => trainListToDelete.Contains(train));
 
         if (trainListToDelete.Count > 0)
         {
@@ -77,7 +77,7 @@ public partial class DeleteWindowViewModel : SearchWithFiltersWindowViewModel
 
     private void DeleteFromDatabase(List<TrainModel> trainListToDelete)
     {
-        _trainListViewModel.Trains.RemoveRange(trainListToDelete);
+        _trainListViewModel.DeleteFromDb(trainListToDelete);
         _trainListViewModel.SaveDbChanges();
     }
 }

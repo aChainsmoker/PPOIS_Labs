@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using TrainScheduler.DatabaseControl;
 using TrainScheduler.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace TrainScheduler.ViewModel;
 
@@ -75,7 +75,7 @@ public partial class AddWindowViewModel : ObservableObject
 
     private void AddToDatabase(TrainModel trainToAdd)
     {
-        _trainListViewModel.Trains.Add(trainToAdd);
+        (_trainListViewModel.Trains as DbSet<TrainModel>).Add(trainToAdd);
         _trainListViewModel.SaveDbChanges();
     }
 }

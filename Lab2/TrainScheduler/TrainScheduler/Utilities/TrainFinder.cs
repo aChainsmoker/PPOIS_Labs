@@ -5,7 +5,7 @@ namespace TrainScheduler.Utilities;
 
 public static class TrainFinder
 {
-    public static IQueryable<TrainModel> FindTrains(TrainModel train, DbSet<TrainModel> trains, DateTime departureTimeLowLimit,
+    public static IQueryable<TrainModel> FindTrains(TrainModel train, IEnumerable<TrainModel> trains, DateTime departureTimeLowLimit,
         DateTime departureTimeUpperLimit, DateTime arrivalTimeLowLimit, DateTime arrivalTimeUpperLimit,
         string travelTime, bool numberCheck, bool departureStationCheck, bool arrivalStationCheck,
         bool departureTimeCheck, bool arrivalTimeCheck, bool travelTimeCheck)

@@ -34,7 +34,6 @@
                                     <Label Text="{Binding Number}" 
                                            HorizontalOptions="Center" 
                                            FontSize="14"
-                                           Grid.Column="1"
                                            FontAttributes="Bold"/>
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Column="1" 
@@ -42,14 +41,11 @@
                                                      Spacing="3">
                                     <Label Text="Departure Station:" 
                                            HorizontalOptions="Center"
-                                           Grid.Row="1"
                                            FontSize="14"
                                            TextColor="Gray"/>
                                     <Label Text="{Binding DepartureStation}" 
                                            HorizontalOptions="Center" 
                                            FontSize="14"
-                                           Grid.Row="1"
-                                           Grid.Column="1"
                                            FontAttributes="Bold"/>
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Column="2" 
@@ -57,14 +53,11 @@
                                                      Spacing="3">
                                     <Label Text="Arrival Station:" 
                                            HorizontalOptions="Center"
-                                           Grid.Row="2"
                                            FontSize="14"
                                            TextColor="Gray"/>
                                     <Label Text="{Binding ArrivalStation}" 
                                            HorizontalOptions="Center" 
                                            FontSize="14"
-                                           Grid.Row="2"
-                                           Grid.Column="1"
                                            FontAttributes="Bold"/>
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Column="3" 
@@ -72,14 +65,11 @@
                                                      Spacing="3">
                                     <Label Text="Departure Time:" 
                                            HorizontalOptions="Center"
-                                           Grid.Row="3"
                                            FontSize="14"
                                            TextColor="Gray"/>
                                     <Label Text="{Binding DepartureTime, StringFormat='{0:dd.MM.yyyy HH:mm}'}" 
                                            HorizontalOptions="Center" 
                                            FontSize="14"
-                                           Grid.Row="3"
-                                           Grid.Column="1"
                                            FontAttributes="Bold"/>
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Column="4" 
@@ -87,14 +77,11 @@
                                                      Spacing="3">
                                     <Label Text="Arrival Time:" 
                                            HorizontalOptions="Center"
-                                           Grid.Row="4"
                                            FontSize="14"
                                            TextColor="Gray"/>
                                     <Label Text="{Binding ArrivalTime, StringFormat='{0:dd.MM.yyyy HH:mm}'}" 
                                            HorizontalOptions="Center" 
                                            FontSize="14"
-                                           Grid.Row="4"
-                                           Grid.Column="1"
                                            FontAttributes="Bold"/>
                                 </VerticalStackLayout>
                                 <VerticalStackLayout Grid.Column="5" 
@@ -102,14 +89,11 @@
                                                      Spacing="3">
                                     <Label Text="Travel Time:" 
                                            HorizontalOptions="Center"
-                                           Grid.Row="4"
                                            FontSize="14"
                                            TextColor="Gray"/>
                                     <Label HorizontalOptions="Center" 
                                            FontSize="14" 
                                            Text="{Binding FormattedTravelTime}"
-                                           Grid.Row="4"
-                                           Grid.Column="1"
                                            FontAttributes="Bold">
                                     </Label>
                                 </VerticalStackLayout>

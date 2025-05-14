@@ -1,9 +1,7 @@
-﻿using CommunityToolkit.Maui.Core.Extensions;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using System.Xml;
-using TrainScheduler.DatabaseControl;
 using TrainScheduler.Model;
 using TrainScheduler.Utilities;
 
@@ -15,7 +13,8 @@ public partial class MainPageViewModel : ObservableObject
 
     public MainPageViewModel()
     {
-        TrainListViewModel = new TrainListViewModel("trains.db");
+        TrainListModel trainModel = new TrainListModel("trains.db");
+        TrainListViewModel = new TrainListViewModel(trainModel);
     }
 
     [RelayCommand]
@@ -59,7 +58,7 @@ public partial class MainPageViewModel : ObservableObject
             List<TrainModel> trains = await XmlParser.LoadFromXML();
             if (trains == null) return;
             TrainListViewModel.ClearTracking();
-            TrainListViewModel.Trains.AddRange(trains);
+            (TrainListViewModel.Trains as DbSet<TrainModel>).AddRange(trains);
             TrainListViewModel.SaveDbChanges();
         }
         catch (XmlException ex)

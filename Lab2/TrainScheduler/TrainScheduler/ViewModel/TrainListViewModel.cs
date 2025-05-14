@@ -16,20 +16,14 @@ public partial class TrainListViewModel : ObservableObject
     [ObservableProperty] private int _AmountOfItems;
     [ObservableProperty] private string _displayMode = "List";
     [ObservableProperty] private string[] _displayModes = ["List", "Tree"];
-
     [ObservableProperty] private List<TrainModel> _visibleTrains;
 
-    public DbSet<TrainModel> Trains
+    private IEnumerable<TrainModel> _trainSource;
+
+    public IEnumerable<TrainModel> Trains
     {
-        get
-        {
-            return _model.Trains;
-        }
-        set
-        {
-            _model.Trains = value;
-            OnPropertyChanged(nameof(Trains));
-        }
+        get { return _trainSource; }
+        set { _trainSource = value; }
     }
 
 
@@ -48,11 +42,16 @@ public partial class TrainListViewModel : ObservableObject
         UpdateTrainList();
     }
 
-    public TrainListViewModel(string dbPath)
+    public TrainListViewModel(TrainListModel model)
     {
+        _model = model;
+        _trainSource = model.Trains;
+        UpdateTrainList();
+    }
 
-        _model = new TrainListModel(dbPath);
-
+    public TrainListViewModel(IEnumerable<TrainModel> trains)
+    {
+        _trainSource = trains;
         UpdateTrainList();
     }
 
@@ -60,7 +59,8 @@ public partial class TrainListViewModel : ObservableObject
     {
         if (!IsListVisible)
         {
-            VisibleTrains = Trains.ToList();
+            if (Trains is DbSet<TrainModel> trains)
+                VisibleTrains = trains.ToList();
             return;
         }
 
@@ -137,10 +137,16 @@ public partial class TrainListViewModel : ObservableObject
     public void ClearTracking()
     {
         _model.DbContext.ChangeTracker.Clear();
-        Trains.ExecuteDelete();
+        _model.Trains.ExecuteDelete();
     }
+
     public void SaveDbChanges()
     {
         _model.DbContext.SaveChanges();
+    }
+
+    public void DeleteFromDb(List<TrainModel> trainsToDelete)
+    {
+        _model.Trains.RemoveRange(trainsToDelete);
     }
 }

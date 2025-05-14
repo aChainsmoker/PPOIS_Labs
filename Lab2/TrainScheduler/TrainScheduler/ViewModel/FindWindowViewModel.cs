@@ -15,10 +15,7 @@ public partial class FindWindowViewModel : SearchWithFiltersWindowViewModel
     {
         _trainListViewModel = trainListViewModel;
 
-        _searchResultTrainListViewModel = new TrainListViewModel("_foundTrains.db");
-        _searchResultTrainListViewModel.ClearTracking();
-        _searchResultTrainListViewModel.Trains.AddRange(_trainListViewModel.Trains);
-        _searchResultTrainListViewModel.SaveDbChanges();
+        _searchResultTrainListViewModel = new TrainListViewModel(_trainListViewModel.Trains);
         _searchResultTrainListViewModel.UpdateTrainList();
         AssignDefaultValuesForTimeSpans();
 
@@ -37,12 +34,10 @@ public partial class FindWindowViewModel : SearchWithFiltersWindowViewModel
         };
         try
         {
-            SearchResultTrainListViewModel.ClearTracking();
-            SearchResultTrainListViewModel.Trains.AddRange(TrainFinder.FindTrains(trainModelToFind,
+            SearchResultTrainListViewModel.Trains = TrainFinder.FindTrains(trainModelToFind,
                     _trainListViewModel.Trains, DepartureTimeLowLimit, DepartureTimeUpperLimit,
                     ArrivalTimeLowLimit, ArrivalTimeUpperLimit, TravelTime, NumberCheck, DepartureStationCheck,
-                    ArrivalStationCheck, DepartureTimeCheck, ArrivalTimeCheck, TravelTimeCheck));
-            SearchResultTrainListViewModel.SaveDbChanges();
+                    ArrivalStationCheck, DepartureTimeCheck, ArrivalTimeCheck, TravelTimeCheck).ToList();
         }
         catch (ArgumentException ex)
         {
